@@ -1,5 +1,6 @@
 import { Text, View, StyleSheet } from "react-native";
 
+{/** WIP Home Screen */}
 export default function Index() {
   return (
     <View
@@ -12,6 +13,7 @@ export default function Index() {
 
 }
 
+{/** CSS for Home Screen */}
 const styles = StyleSheet.create({
   container: {
     flex: 1,
