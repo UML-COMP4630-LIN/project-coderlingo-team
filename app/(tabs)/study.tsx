@@ -1,5 +1,6 @@
 import { Text, View, StyleSheet } from 'react-native';
 
+{/** WIP Study Screen */}
 export default function StudyScreen() {
   return (
     <View style={styles.container}>
@@ -8,6 +9,7 @@ export default function StudyScreen() {
   );
 }
 
+{/** CSS for Study screen */}
 const styles = StyleSheet.create({
   container: {
     flex: 1,

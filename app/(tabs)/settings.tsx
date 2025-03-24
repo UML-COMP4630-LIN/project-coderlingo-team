@@ -1,5 +1,6 @@
 import { Text, View, StyleSheet } from 'react-native';
 
+{/** WIP Settings Screen */}
 export default function SettingsScreen() {
   return (
     <View style={styles.container}>
@@ -8,6 +9,7 @@ export default function SettingsScreen() {
   );
 }
 
+{/** CSS for Settings screen */}
 const styles = StyleSheet.create({
   container: {
     flex: 1,

@@ -1,19 +1,21 @@
-import { Text, View, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
+import Categories from '../components/categories';
 
+{/** CoursesScreen: Returns a View with a list of categories */}
 export default function CoursesScreen() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>This will be the courses screen</Text>
+    <View>
+      <Categories/>
     </View>
   );
 }
 
+{/** CSS for Courses Screen */}
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#ffffff',
-    justifyContent: 'center',
-    alignItems: 'center',
+    padding: 5,
   },
   text: {
     color: '#000',
