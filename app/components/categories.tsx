@@ -27,48 +27,43 @@ const data = [
 // return a View with a FlatList displaying the different programming languages in two colummns.
 export default function Categories() {
     const router = useRouter();
-    // Update the state of a clicked image
-    const [images, setImages] = React.useState(data);
-
+    
     // Display an alert when an image button is pressed. Hit the cancel button to continue.
-function imagePressed(item : Props) {
-    if (item.name === 'C') {
-        router.push('/components/ctopics');
-      } else {
-        Alert.alert(
-          'Course Not Available',
-          `The ${item.name} course is not available yet.`,
-          [{ text: 'Cancel', style: 'cancel' }]
-        );
-      }
-};
+    function imagePressed(item: Props) {
+        if (item.name === 'C') {
+            router.push('/components/ctopics');
+        } else {
+            Alert.alert(
+                'Course Not Available',
+                `The ${item.name} course is not available yet.`,
+                [{ text: 'Cancel', style: 'cancel' }]
+            );
+        }
+    }
 
 
     // Dim the image buttons when they are pressed on
     // return a clickable image for each button in the data list
-function renderItem({ item }: {item: Props}) {
+    function renderItem({ item }: { item: Props }) {
+        return (
+            <TouchableOpacity onPress={() => imagePressed(item)}>
+                <Image
+                    source={item.img}
+                    style={styles.item}
+                />
+            </TouchableOpacity>
+        );
+    }
     return (
-        <TouchableOpacity onPress={() => imagePressed(item)}>
-             <Image 
-            source={item.img}
-            style={styles.item}
-        />
-        </TouchableOpacity>
-       
-    );
-}
-
-// return a View with a FlatList displaying the different programming languages in two colummns.
-export default function Categories() {
-    // Update the state of a clicked image
-    const [images, setImages] = React.useState(data);
-    return(
-        <View style={styles.container}>
-            <FlatList data={images} renderItem={renderItem} keyExtractor={(item) => item.id} numColumns={2}/> 
-        </View>
-           
-    );
-}
+    <View style={styles.container}>
+        <FlatList
+        data={data}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id}
+        numColumns={2} />
+            </View>
+        );
+    }
 
 // CSS for the Categories component
 const styles = StyleSheet.create({
