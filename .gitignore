@@ -36,7 +36,4 @@ yarn-error.*
 *.tsbuildinfo
 
 app-example
-<<<<<<< HEAD
 node_modules
-=======
->>>>>>> 7c52e55 (Initial commit)
