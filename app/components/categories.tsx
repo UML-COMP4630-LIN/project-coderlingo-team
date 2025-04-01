@@ -1,16 +1,10 @@
+import { router } from "expo-router";
 import * as React from "react";
 import { Image, FlatList, StyleSheet, View, TouchableOpacity, Alert } from "react-native";
-<<<<<<< HEAD
-import { useRouter } from "expo-router";
-
-{/** Code for the list of categories in the courses screen. */}
-
-=======
 
 {/** Code for the list of categories in the courses screen. */}
 
 
->>>>>>> 7c52e55 (Initial commit)
 // define property values for data
 type Props = {
     id: string;
@@ -31,57 +25,19 @@ const data = [
     {id: '8', name: 'TypeScript', img: require('../../assets/images/icons/typescript.png')},
 ];
 
-<<<<<<< HEAD
-// return a View with a FlatList displaying the different programming languages in two colummns.
-export default function Categories() {
-    const router = useRouter();
-    
-    // Display an alert when an image button is pressed. Hit the cancel button to continue.
-    function imagePressed(item: Props) {
-        if (item.name === 'C') {
-            router.push('/components/ctopics');
-        } else {
-            Alert.alert(
-                'Course Not Available',
-                `The ${item.name} course is not available yet.`,
-                [{ text: 'Cancel', style: 'cancel' }]
-            );
-        }
-    }
-
-
-    // Dim the image buttons when they are pressed on
-    // return a clickable image for each button in the data list
-    function renderItem({ item }: { item: Props }) {
-        return (
-            <TouchableOpacity onPress={() => imagePressed(item)}>
-                <Image
-                    source={item.img}
-                    style={styles.item}
-                />
-            </TouchableOpacity>
-        );
-    }
-    return (
-    <View style={styles.container}>
-        <FlatList
-        data={data}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.id}
-        numColumns={2} />
-            </View>
-        );
-    }
-=======
 
 // Display an alert when an image button is pressed. Hit the cancel button to continue.
 function imagePressed(item : Props) {
-    return(
+    if(item.name === 'C') {
+        router.push('/components/ctopics')
+    }
+    else {
         Alert.alert('Course Not Available', `The ${item.name} course is not available yet.`, [{
         text: 'Cancel',
         onPress: () => console.log('Cancel Pressed'),
         style: 'cancel',
-    },]));
+    },])
+    };
 };
 
 // Dim the image buttons when they are pressed on
@@ -109,7 +65,6 @@ export default function Categories() {
            
     );
 }
->>>>>>> 7c52e55 (Initial commit)
 
 // CSS for the Categories component
 const styles = StyleSheet.create({
