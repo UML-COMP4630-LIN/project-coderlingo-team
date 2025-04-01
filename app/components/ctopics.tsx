@@ -1,6 +1,12 @@
 import React from "react";
 import { View, Text, StyleSheet, Button, TouchableOpacity } from "react-native";
+import { useRouter } from "expo-router";
+import { Link } from "expo-router";
 
+type Props = {
+  id: string;
+  name: string;
+};
 // list of topics for C
 const cTopics = [
   { id: '1', name: 'Pointers' },
@@ -11,8 +17,15 @@ const cTopics = [
 ];
 
 export default function CTopics() {
-  const handleButtonPress = (topic: string) => {
-    alert(`The ${topic} topic is not available yet.`);
+  const router = useRouter();
+
+  const handleButtonPress = (topic: Props) => {
+    if(topic.name === 'Pointers' ) {
+      router.push("/quiz");
+    } else {
+      alert(`The ${topic.name} topic is not available yet.`);
+    }
+    
   };
 
   return (
@@ -22,7 +35,7 @@ export default function CTopics() {
         <TouchableOpacity
           key={topic.id}
           style={styles.button}
-          onPress={() => handleButtonPress(topic.name)}
+          onPress={() => handleButtonPress(topic)}
         >
           <Text style={styles.buttonText}>{topic.name}</Text>
         </TouchableOpacity>
