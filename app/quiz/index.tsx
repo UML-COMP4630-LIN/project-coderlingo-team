@@ -21,6 +21,35 @@ export default function QuizScreen() {
   
     let updatedScore = score;
   
+    if (isCorrect && !hasAttempted) {
+      updatedScore += 1;
+      setScore(updatedScore);
+    }
+  
+    setInputAnswer("");
+    setHasAttempted(false);
+  
+    if (!isLastQuestion) {
+      setCurrentIndex(prev => prev + 1);
+    } else {
+      router.replace({
+        pathname: "/quiz/result",
+        params: {
+          score: updatedScore.toString(),
+          total: questions.length.toString(),
+        },
+      });
+    }
+  };
+  
+
+  /*const handleAnswer = (option: string) => {
+    const isCorrect =
+      option.trim().toLowerCase() === current.correctAnswer.trim().toLowerCase();
+    const isLastQuestion = currentIndex + 1 === questions.length;
+  
+    let updatedScore = score;
+  
     if (isCorrect) {
       if (!hasAttempted) {
         updatedScore += 1;
@@ -44,7 +73,7 @@ export default function QuizScreen() {
     } else {
       setHasAttempted(true);
     }
-  };
+  };*/
   
   return (
     <View style={styles.container}>
