@@ -4,7 +4,11 @@
     "slug": "CoderLingo",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/coderlingo_logo.png",
+    "splash": {
+      "resizeMode": "contain",
+      "backgroundColor": "#89CFF0"
+    },
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
