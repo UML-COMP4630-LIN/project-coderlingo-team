@@ -2,7 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Tabs } from 'expo-router';
 import { Menu, Provider } from 'react-native-paper';
 import { useState } from 'react';
-import { Pressable } from 'react-native'
+import { Pressable, Image } from 'react-native'
 
 {/** Settings popdown menu. */}
 function SettingsMenu() {
@@ -19,10 +19,19 @@ function SettingsMenu() {
           <Ionicons name="settings-outline" size={24} color="#fff" />
         </Pressable>
       }>
-      <Menu.Item onPress={() => {}} title="Placeholder 1" />
-      <Menu.Item onPress={() => {}} title="Placeholder 2" />
-      <Menu.Item onPress={() => {}} title="Placeholder 3" />
+      <Menu.Item onPress={() => {}} title= "Placeholder 1" />
+      <Menu.Item onPress={() => {}} title= "Placeholder 2" />
+      <Menu.Item onPress={() => {}} title= "Placeholder 3" />
     </Menu>
+  );
+}
+
+function HeaderLogo() {
+  return (
+    <Image
+    source={require('../../assets/images/coderlingo_logo.png')}
+    style={{ width: 120, height: 40, resizeMode: 'contain' }}
+    />
   );
 }
 
@@ -32,15 +41,16 @@ export default function TabLayout() {
     return(
     <Provider>
       <Tabs screenOptions={{
-        tabBarActiveTintColor: '#ffd33d',
+        tabBarActiveTintColor: '#fff',
         headerStyle: {
-          backgroundColor: '#25292e',
+          backgroundColor: '#00008B',
         },
         headerShadowVisible: false,
         headerTintColor: '#fff',
         tabBarStyle: {
-        backgroundColor: '#25292e',
+        backgroundColor: '#00008B',
         },
+        headerTitle: () => <HeaderLogo />,
         headerRight: () => <SettingsMenu />,
       }}>
         {/** Bottom Navigation Bar */}

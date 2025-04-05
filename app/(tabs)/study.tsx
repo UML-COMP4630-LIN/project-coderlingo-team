@@ -13,7 +13,7 @@ export default function StudyScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ffffff',
+    backgroundColor: '#89CFF0',
     justifyContent: 'center',
     alignItems: 'center',
   },

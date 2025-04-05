@@ -1,7 +1,5 @@
-import React from "react";
 import { View, Text, StyleSheet, Button, TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
-import { Link } from "expo-router";
 
 type Props = {
   id: string;
@@ -18,7 +16,7 @@ const cTopics = [
 
 export default function CTopics() {
   const router = useRouter();
-
+  
   const handleButtonPress = (topic: Props) => {
     if(topic.name === 'Pointers' ) {
       router.push("/quiz");
@@ -47,18 +45,19 @@ export default function CTopics() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#89CFF0',
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
   },
   title: {
-    fontSize: 24,
+    fontSize: 40,
     fontWeight: 'bold',
+    color: '#FFFFFF',
     marginBottom: 20,
   },
   button: {
-    backgroundColor: '#89CFF0',
+    backgroundColor: '#4169E1',
     borderRadius: 8,
     paddingVertical: 15,
     paddingHorizontal: 25,

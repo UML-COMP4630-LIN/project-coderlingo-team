@@ -70,7 +70,7 @@ export default function Categories() {
 const styles = StyleSheet.create({
     // Style the container to center the elements
     container: {
-        backgroundColor: "#FFFFFF",
+        backgroundColor: "#89CFF0",
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -82,6 +82,6 @@ const styles = StyleSheet.create({
         margin: 5, 
         borderRadius: 10, 
         borderWidth: 3, 
-        borderColor: "#D3D3D3",
+        borderColor: "#4169E1",
     }
 });
