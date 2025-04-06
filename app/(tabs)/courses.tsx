@@ -24,7 +24,7 @@ export default function TopicsScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 5, backgroundColor: "#fff" },
+  container: { flex: 1, padding: 5, backgroundColor: "#89CFF0" },
   title: { fontSize: 24, marginBottom: 20, textAlign: "center" },
   button: { padding: 15, backgroundColor: "#ffd33d", borderRadius: 10, marginVertical: 10 },
   buttonText: { fontSize: 18, textAlign: "center" },

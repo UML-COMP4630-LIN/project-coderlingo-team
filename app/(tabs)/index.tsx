@@ -6,16 +6,52 @@ I certify that the work submitted with this assignment is mine and was generated
 Date: 04/02/2025
 Name: Rohan Mallu, Brendon So, William King, Shaan Gill */
 
-import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
-import { router } from "expo-router";
+import { View, Text, ScrollView, StyleSheet, Pressable } from 'react-native';
 
-export default function Index() {
+
+export default function HomeScreen() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Coderlingo Official App</Text>
-      <TouchableOpacity style={styles.button} onPress={() => router.push("/quiz")}>
-        <Text style={styles.buttonText}>Start Quiz</Text>
-      </TouchableOpacity>
+    <ScrollView style={styles.container}>
+
+      {/* Welcome Banner */}
+      <Text style={styles.welcomeText}>Welcome back!</Text>
+
+      {/* Daily Streak */}
+      <View style={styles.card}>
+        <Text style={styles.cardTitle}>🔥 Daily Streak</Text>
+      </View>
+
+      {/* Continue Learning */}
+      <Pressable style={styles.continueCard}>
+        <Text style={styles.continueText}>📘 Continue Learning</Text>
+      </Pressable>
+
+      {/* Jump Back In */}
+      <View style={styles.card}>
+        <Text style={styles.cardTitle}>🎯 Jump Back In</Text>
+      </View>
+
+       {/* Bookmarks */}
+       <View style={styles.card}>
+        <Text style={styles.cardTitle}>🔖 Bookmarks</Text>
+      </View>
+
+    </ScrollView>
+  );
+}
+
+function Category({ label, color }: { label: string; color: string }) {
+  return (
+    <View style={[styles.categoryBox, { backgroundColor: color }]}>
+      <Text style={styles.categoryText}>{label}</Text>
+    </View>
+  );
+}
+
+function BookmarkItem({ title }: { title: string }) {
+  return (
+    <View style={styles.bookmarkBox}>
+      <Text style={styles.bookmarkText}>{title}</Text>
     </View>
   );
 }
@@ -23,24 +59,76 @@ export default function Index() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ffffff',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
+    backgroundColor: '#89CFF0',
+    padding: 16,
   },
-  text: {
-    color: '#000',
-    fontSize: 22,
+  welcomeText: {
+    color: '#fff',
+    fontSize: 40,
+    fontWeight: '600',
+    marginBottom: 20,
+    textAlign: 'center',
+  },
+  card: {
+    backgroundColor: '#4169E1',
+    borderRadius: 12,
+    padding: 16,
     marginBottom: 20,
   },
-  button: {
-    backgroundColor: '#ffd33d',
-    paddingVertical: 12,
-    paddingHorizontal: 24,
-    borderRadius: 10,
-  },
-  buttonText: {
+  cardTitle: {
+    color: '#fff',
     fontSize: 18,
-    color: '#000',
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  continueCard: {
+    backgroundColor: '#4169E1',
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 20,
+  },
+  continueText: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#fff',
+  },
+  lessonTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#1c1c1e',
+    marginTop: 4,
+  },
+  categories: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 10,
+  },
+  categoryBox: {
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    borderRadius: 8,
+    marginRight: 10,
+    marginBottom: 10,
+  },
+  categoryText: {
+    fontWeight: 'bold',
+    color: '#1c1c1e',
+  },
+  bookmarks: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 10,
+  },
+  bookmarkBox: {
+    backgroundColor: '#fff',
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 8,
+    marginRight: 10,
+    marginBottom: 10,
+  },
+  bookmarkText: {
+    color: '#1c1c1e',
+    fontWeight: '600',
   },
 });

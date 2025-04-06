@@ -86,14 +86,14 @@ const styles = StyleSheet.create({
   },
   progressFill: {
     height: "100%",
-    backgroundColor: "green",
+    backgroundColor: "#4169E1",
     borderRadius: 5,
   },
 
 
   Container: {
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor: "#89CFF0",
     padding: 20,
   },
   profileContainer: {
@@ -111,6 +111,7 @@ const styles = StyleSheet.create({
   username: {
     fontSize: 20,
     fontWeight: "bold",
+
   },
   joinDate: {
     fontSize: 14,
@@ -145,7 +146,7 @@ const styles = StyleSheet.create({
     padding: 15,
     color: "white",
     fontSize: 20,
-    backgroundColor: "green",
+    backgroundColor: "#4169E1",
     marginBottom: 10,
     borderRadius: 10,
     alignItems: "center",
