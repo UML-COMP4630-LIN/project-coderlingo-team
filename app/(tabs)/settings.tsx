@@ -43,14 +43,14 @@ export default function ProfileScreen() {
         <View style={styles.skillRow}>
           <Text style={styles.skillText}>C</Text>
           <View style={styles.progressBar}>
-            <View style={[styles.progressFill, { width: "35%" }]} />
+            <View style={[styles.progressFill, { width: "10%" }]} />
           </View>
         </View>
 
         <View style={styles.skillRow}>
           <Text style={styles.skillText}>Python</Text>
           <View style={styles.progressBar}>
-            <View style={[styles.progressFill, { width: "90%" }]} />
+            <View style={[styles.progressFill, { width: "10%" }]} />
           </View>
         </View>
       </View>
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
   },
   progressFill: {
     height: "100%",
-    backgroundColor: "#4169E1",
+    backgroundColor: "#008000",
     borderRadius: 5,
   },
 

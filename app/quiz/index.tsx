@@ -74,7 +74,8 @@ export default function QuizScreen() {
       setHasAttempted(true);
     }
   };*/
-  
+  const progress = ((currentIndex + 1) / questions.length) * 100;
+
   return (
     <View style={styles.container}>
       <Text style={styles.question}>
@@ -109,6 +110,14 @@ export default function QuizScreen() {
           </TouchableOpacity>
         ))
       )}
+      <View style={styles.progressBarContainer}>
+        <Text style={styles.progressText}>
+          Progress: {currentIndex + 1}/{questions.length}
+        </Text>
+        <View style={styles.progressBar}>
+          <View style={[styles.progressFill, { width: `${progress}%` }]} />
+        </View>
+      </View>
     </View>
   );
 }
@@ -121,4 +130,25 @@ const styles = StyleSheet.create({
   input: { borderWidth: 1, borderColor: "#ccc", borderRadius: 10, padding: 12, fontSize: 16, marginBottom: 10 },
   submitButton: { backgroundColor: "#ffd33d", padding: 15, borderRadius: 10 },
   buttonText: { fontSize: 18, textAlign: "center" },
+
+  progressBarContainer: {
+    marginTop: 20,
+    alignItems: "center",
+  },
+  progressText: {
+    fontSize: 16,
+    color: "#555",
+    marginBottom: 8,
+  },
+  progressBar: {
+    width: "100%",
+    height: 10,
+    backgroundColor: "#fff",
+    borderRadius: 5,
+  },
+  progressFill: {
+    height: "100%",
+    backgroundColor: "#008000",
+    borderRadius: 5,
+  },
 });
