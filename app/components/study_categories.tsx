@@ -1,5 +1,6 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
+import { useLocalSearchParams } from "expo-router";
 
 type Props = {
   id: string;
@@ -16,10 +17,19 @@ const cTopics = [
 
 export default function CTopics() {
   const router = useRouter();
-  
+
+
+
+  const { unlockedArray } = useLocalSearchParams();
+  const isArrayUnlocked = unlockedArray === "true"; 
+
+
+
   const handleButtonPress = (topic: Props) => {
     if (topic.name === 'Pointers') {
       router.push("/Study");
+    } else if (topic.name === 'Arrays' && isArrayUnlocked) {
+      router.push("/Study"); //WIP for next sections
     } else {
       alert(`The ${topic.name} topic is not available yet.`);
     }
@@ -29,18 +39,22 @@ export default function CTopics() {
     <View style={styles.container}>
       <Text style={styles.title}>STUDY</Text>
       <View style={styles.pathContainer}>
-
         {cTopics.map((topic, index) => (
-            //UPDATE
           <TouchableOpacity
             key={topic.id}
+            onPress={() => handleButtonPress(topic)}
+
             style={[
               styles.button,
-              topic.name === 'Pointers' ? styles.activeButton : styles.disabledButton,
-              { top: `${(index % 3) * 15}%`, left: `${(index * 20) + 1}%` } 
+              (topic.name === 'Pointers' || topic.name === 'Arrays' && isArrayUnlocked)
+                ? styles.activeButton
+                : styles.disabledButton,
+              {
+                top: `${index * 25}%`,
+                left: '40%',
+              },
             ]}
-            onPress={() => handleButtonPress(topic)}
-            disabled={topic.name !== 'Pointers'}
+            disabled={!(topic.name === 'Pointers' || (topic.name === 'Arrays' && isArrayUnlocked))}
           >
             <Text style={styles.buttonText}>{topic.name}</Text>
           </TouchableOpacity>
@@ -50,21 +64,22 @@ export default function CTopics() {
   );
 }
 
+
 const styles = StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: '#89CFF0',
       justifyContent: 'center',
       alignItems: 'center',
-      padding: 20,
+      padding: 10,
     },
     title: {
       fontSize: 40,
       fontWeight: 'bold',
       alignItems: 'center',
       color: '#FFFFFF',
-      marginTop: 10,
-      marginBottom: 40,
+      marginTop: 1,
+      marginBottom: 10,
 
 
     },

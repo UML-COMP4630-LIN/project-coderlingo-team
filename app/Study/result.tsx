@@ -18,7 +18,12 @@ export default function ResultScreen() {
       <Text style={styles.completedText}>Completed Pointers Section</Text>
 
       <TouchableOpacity
-        onPress={() => router.push("/(tabs)/study")}
+        onPress={() =>
+          router.push({
+            pathname: "/(tabs)/study",
+            params: { unlockedArray: "true" },
+          })
+        }
         style={styles.button}
       >
         <Text style={styles.buttonText}>Return</Text>

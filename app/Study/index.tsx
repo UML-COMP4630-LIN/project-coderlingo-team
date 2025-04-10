@@ -62,12 +62,21 @@ export default function QuizScreen() {
       ) : null}
 
 
-      <TouchableOpacity
-        style={styles.submitButton}
-        onPress={() => handleAnswer('')}
-      >
-        <Text style={styles.buttonText}>Next</Text>
-      </TouchableOpacity>
+      <View style={styles.buttonRow}>
+        <TouchableOpacity style={styles.bookmarkButton} 
+        onPress={() => {/**/}}>
+        <Text style={styles.bookmarkText}>BOOKMARK</Text> 
+          
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.submitButton}
+          onPress={() => handleAnswer('')}
+        >
+          <Text style={styles.buttonText}>Next</Text>
+        </TouchableOpacity>
+      </View>
+
 
       <View style={styles.progressBarContainer}>
         <Text style={styles.progressText}>
@@ -89,7 +98,24 @@ const styles = StyleSheet.create({
     input: { borderWidth: 1, borderColor: "#ccc", borderRadius: 10, padding: 12, fontSize: 16, marginBottom: 10 },
     submitButton: { backgroundColor: "#008000", padding: 15, borderRadius: 10 },
     buttonText: { color: 'white', fontSize: 18, textAlign: "center" },
-  
+
+    buttonRow: {
+      flexDirection: "row",
+      justifyContent: "center",
+      alignItems: "center",
+      marginTop: 20,
+
+    },
+    bookmarkButton: {
+      backgroundColor: "#18191A",
+      padding: 15,
+      borderRadius: 10,
+    },
+    bookmarkText: {
+      fontSize: 18,
+      color: "white",
+    },
+    
     progressBarContainer: {
       marginTop: 20,
       alignItems: "center",
