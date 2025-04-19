@@ -1,24 +1,22 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { useRouter } from "expo-router";
-import CustomHeader from "../components/header";
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRouter } from "expo-router";
 import { useLayoutEffect } from "react";
+import CustomHeader from "../components/header";
 
-type Props = {
+type Subtopic = {
   id: string;
   name: string;
-};
-
-// list of topics for C
-const cTopics = [
-  { id: '1', name: 'Pointers' },
-  { id: '2', name: 'Arrays' },
-  { id: '3', name: 'Functions' },
-  { id: '4', name: 'Structures' },
-  { id: '5', name: 'File I/O' },
+}
+// list of subtopics for pointers
+const pointerSubtopics = [
+  { id: '1', name: 'Pointer Basics' },
+  { id: '2', name: 'Memory Management' },
+  { id: '3', name: 'Pointer Arithmetic' },
+  { id: '4', name: 'Pointer Errors' },
+  { id: '5', name: 'Double Pointers' },
 ];
 
-export default function CTopics() {
+export default function PointerTopics() {
   const router = useRouter();
   const navigation = useNavigation();
 
@@ -26,26 +24,22 @@ export default function CTopics() {
     navigation.setOptions({ headerShown: false });
   }, [navigation]);
 
-  const handleButtonPress = (topic: Props) => {
-    if (topic.name === 'Pointers') {
-      router.push("/components/pointers_topics");
-    } else {
-      alert(`The ${topic.name} topic is not available yet.`);
-    }
+  const handleSubtopicPress = (subtopic: Subtopic) => {
+    router.push("/quiz");
   };
 
   return (
     <View style={{ flex: 1 }}>
       <CustomHeader />
       <View style={styles.container}>
-        <Text style={styles.title}>C Programming Topics</Text>
-        {cTopics.map((topic) => (
+        <Text style={styles.title}>Pointer Topics</Text>
+        {pointerSubtopics.map((subtopic) => (
           <TouchableOpacity
-            key={topic.id}
+            key={subtopic.id}
             style={styles.button}
-            onPress={() => handleButtonPress(topic)}
+            onPress={() => handleSubtopicPress(subtopic)}
           >
-            <Text style={styles.buttonText}>{topic.name}</Text>
+            <Text style={styles.buttonText}>{subtopic.name}</Text>
           </TouchableOpacity>
         ))}
       </View>

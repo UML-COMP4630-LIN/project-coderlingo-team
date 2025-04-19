@@ -37,7 +37,7 @@ export default function SignUpScreen() {
 
   const handleSignUp = () => {
     alert("Welcome to CoderLingo!");
-    router.push({ pathname: "/settings", params: { name, date } }); 
+    router.push({ pathname: "/profile", params: { name, date } }); 
   };
 
   return (
