@@ -2,9 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Tabs } from 'expo-router';
 import { Menu, Provider } from 'react-native-paper';
 import { useState } from 'react';
-import { Pressable, Image } from 'react-native'
-
-
+import { Pressable, Image } from 'react-native';
 
 
 {/** Settings popdown menu. */}
@@ -93,10 +91,6 @@ function LangMenu() {
 {/** Layout of all the screens in the (tabs) folder. */}
 export default function TabLayout() {
   {/** CSS for header and tab bars of each screen. */}
-
-
-
-
 
     return(
     <Provider>
