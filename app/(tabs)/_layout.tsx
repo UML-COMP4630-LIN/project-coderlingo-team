@@ -2,7 +2,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { Tabs } from 'expo-router';
 import { Menu, Provider } from 'react-native-paper';
 import { useState } from 'react';
-import { Pressable, Image } from 'react-native'
+import { Pressable, Image } from 'react-native';
+
 
 {/** Settings popdown menu. */}
 function SettingsMenu() {
@@ -35,9 +36,62 @@ function HeaderLogo() {
   );
 }
 
+//WIP selection for entire app
+function LangMenu() {
+  const [visible, setVisible] = useState(false);
+  const openMenu = () => setVisible(true);
+  const closeMenu = () => setVisible(false);
+
+  const data = [
+    { id: '1', name: 'C', img: require('../../assets/images/icons/clang.png') },
+    { id: '2', name: 'C++', img: require('../../assets/images/icons/cplusplus.png') },
+    { id: '3', name: 'C#', img: require('../../assets/images/icons/csharp.png') },
+    { id: '4', name: 'Python', img: require('../../assets/images/icons/python.png') },
+    { id: '5', name: 'Ruby', img: require('../../assets/images/icons/ruby.png') },
+    { id: '6', name: 'Java', img: require('../../assets/images/icons/java.png') },
+    { id: '7', name: 'JavaScript', img: require('../../assets/images/icons/javascript.png') },
+    { id: '8', name: 'TypeScript', img: require('../../assets/images/icons/typescript.png') },
+  ];
+
+  const [selectedLanguage, setSelectedLanguage] = useState(data[0]);
+
+  return (
+    <Menu
+      visible={visible}
+      onDismiss={closeMenu}
+      anchor={
+        <Pressable onPress={openMenu} style={{ marginRight: 15 }}>
+          <Image
+            source={selectedLanguage.img}
+            style={{ width: 24, height: 24, borderRadius: 12 }}
+          />
+        </Pressable>
+      }
+    >
+      {data.map((item) => (
+        <Menu.Item
+          key={item.id}
+          onPress={() => {
+            setSelectedLanguage(item);
+            closeMenu();
+          }}
+          title={item.name}
+          leadingIcon={() => (
+            <Image source={item.img} style={{ width: 25, height: 25, marginRight: 10 }} />
+          )}
+        />
+      ))}
+    </Menu>
+  );
+}
+
+
+
+
 {/** Layout of all the screens in the (tabs) folder. */}
 export default function TabLayout() {
   {/** CSS for header and tab bars of each screen. */}
+
     return(
     <Provider>
       <Tabs screenOptions={{
@@ -50,7 +104,8 @@ export default function TabLayout() {
         tabBarStyle: {
         backgroundColor: '#00008B',
         },
-        headerTitle: () => <HeaderLogo />,
+        headerLeft: () => <HeaderLogo />,
+        headerTitle: () => <LangMenu />,
         headerRight: () => <SettingsMenu />,
       }}>
         {/** Bottom Navigation Bar */}
