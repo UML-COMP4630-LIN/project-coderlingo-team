@@ -5,18 +5,14 @@ import { useState } from 'react';
 import { Pressable, Image } from 'react-native';
 import { useRouter } from 'expo-router';
 
-
-{/** Settings popdown menu. */}
 function SettingsButton() {
   const router = useRouter();
-
   return (
     <Pressable onPress={() => router.push('/components/settings')} style={{ marginRight: 15 }}>
       <Ionicons name="settings-outline" size={24} color="#fff" />
     </Pressable>
   );
 }
-
 
 function HeaderLogo() {
   return (

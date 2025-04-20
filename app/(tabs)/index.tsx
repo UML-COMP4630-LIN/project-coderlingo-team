@@ -7,11 +7,14 @@ Date: 04/02/2025
 Name: Rohan Mallu, Brendon So, William King, Shaan Gill */
 
 import { View, Text, ScrollView, StyleSheet, Pressable } from 'react-native';
-
+import { useTheme } from '../theme/theme_manager'
 
 export default function HomeScreen() {
+  const { isDarkMode } = useTheme();
+  const backgroundColor = isDarkMode ? '#2C2C2C' : '#89CFF0';
+
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={[styles.container, { backgroundColor }]}>
 
       {/* Welcome Banner */}
       <Text style={styles.welcomeText}>Welcome back!</Text>
@@ -59,7 +62,6 @@ function BookmarkItem({ title }: { title: string }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#89CFF0',
     padding: 16,
   },
   welcomeText: {

@@ -1,6 +1,6 @@
 import { Text, View, StyleSheet, Image, FlatList, TouchableOpacity } from "react-native";
 import { useLocalSearchParams, router } from "expo-router"; 
-
+import { useTheme } from '../theme/theme_manager'
 export default function ProfileScreen() {
   const { name } = useLocalSearchParams(); 
   const { date } = useLocalSearchParams(); 
@@ -15,52 +15,57 @@ export default function ProfileScreen() {
   const displayCPP = CPP || 10;
   const displayC = C || 0;
   const displayPython = python || 0;
+  const { isDarkMode } = useTheme();
+  const backgroundColor = isDarkMode ? '#2C2C2C' : '#89CFF0';
+  const cardBackgroundColor = isDarkMode ? '#444' : '#fff';
+  const textColor = isDarkMode ? '#fff' : '#000';
+  const sectionTitleColor = isDarkMode ? '#fff' : '#000';
 
   const newProfile = [
     { id: "1", title: "Add Profile", action: () => router.push("/components/profile") },
   ];
 
   return (
-    <View style={styles.Container}>
+    <View style={[styles.Container, { backgroundColor }]}>
       <View style={styles.profileContainer}>
         <Image source={require('../../assets/images/profile.png')} style={styles.profileImage} />
         <View>
-          <Text style={styles.username}>{displayName}</Text>
-          <Text style={styles.joinDate}>Date Joined: {displayName}</Text>
+          <Text style={[styles.username, { color: textColor }]}>{displayName}</Text>
+          <Text style={[styles.joinDate, { color: textColor }]}>Date Joined: {displayDate}</Text>
         </View>
       </View>
 
-      <View style={styles.skillsContainer}>
-        <Text style={styles.sectionTitle}>Languages</Text>
+      <View style={[styles.skillsContainer, { backgroundColor: cardBackgroundColor }]}>
+        <Text style={[styles.sectionTitle, { color: sectionTitleColor }]}>Languages</Text>
 
         <View style={styles.skillRow}>
-          <Text style={styles.skillText}>C++</Text>
+          <Text style={[styles.skillText, { color: textColor }]}>C++</Text>
           <View style={styles.progressBar}>
           <View style={[styles.progressFill, { width: "10%" }]} />
           </View>
         </View>
 
         <View style={styles.skillRow}>
-          <Text style={styles.skillText}>C</Text>
+          <Text style={[styles.skillText, { color: textColor }]}>C</Text>
           <View style={styles.progressBar}>
             <View style={[styles.progressFill, { width: "10%" }]} />
           </View>
         </View>
 
         <View style={styles.skillRow}>
-          <Text style={styles.skillText}>Python</Text>
+          <Text style={[styles.skillText, { color: textColor }]}>Python</Text>
           <View style={styles.progressBar}>
             <View style={[styles.progressFill, { width: "10%" }]} />
           </View>
         </View>
       </View>
 
-      <View style={styles.skillsContainer}>
-        <Text style={styles.sectionTitle}>Achievements</Text>
+      <View style={[styles.skillsContainer, { backgroundColor: cardBackgroundColor }]}>
+        <Text style={[styles.sectionTitle, { color: sectionTitleColor }]}>Achievements</Text>
       </View>
 
-      <View style={styles.skillsContainer}>
-        <Text style={styles.sectionTitle}>Friends</Text>
+      <View style={[styles.skillsContainer, { backgroundColor: cardBackgroundColor }]}>
+        <Text style={[styles.sectionTitle, { color: sectionTitleColor }]}>Friends</Text>
       </View>
 
       <FlatList
