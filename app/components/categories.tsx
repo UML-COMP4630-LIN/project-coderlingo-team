@@ -1,7 +1,7 @@
 import { router } from "expo-router";
 import * as React from "react";
 import { Image, FlatList, StyleSheet, View, TouchableOpacity, Alert } from "react-native";
-
+import { useTheme } from "../theme/theme_manager"; 
 {/** Code for the list of categories in the courses screen. */}
 
 
@@ -58,8 +58,11 @@ function renderItem({ item }: {item: Props}) {
 export default function Categories() {
     // Update the state of a clicked image
     const [images, setImages] = React.useState(data);
+    const { isDarkMode } = useTheme();
+    const containerBackgroundColor = isDarkMode ? "#2C2C2C" : "#89CFF0";
+
     return(
-        <View style={styles.container}>
+        <View style={[styles.container, { backgroundColor: containerBackgroundColor }]}>
             <FlatList data={images} renderItem={renderItem} keyExtractor={(item) => item.id} numColumns={2}/> 
         </View>
            

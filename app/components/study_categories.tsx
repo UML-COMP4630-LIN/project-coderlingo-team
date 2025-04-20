@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
 import { useLocalSearchParams } from "expo-router";
-
+import { useTheme} from "../theme/theme_manager";
 type Props = {
   id: string;
   name: string;
@@ -17,12 +17,10 @@ const cTopics = [
 
 export default function CTopics() {
   const router = useRouter();
-
-
-
   const { unlockedArray } = useLocalSearchParams();
   const isArrayUnlocked = unlockedArray === "true"; 
-
+  const { isDarkMode, setIsDarkMode } = useTheme();
+  const containerBackgroundColor = isDarkMode ? '#2C2C2C' : '#89CFF0';
 
 
   const handleButtonPress = (topic: Props) => {
@@ -36,7 +34,7 @@ export default function CTopics() {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: containerBackgroundColor }]}>
       <Text style={styles.title}>STUDY</Text>
       <View style={styles.pathContainer}>
         {cTopics.map((topic, index) => (
@@ -63,7 +61,6 @@ export default function CTopics() {
     </View>
   );
 }
-
 
 const styles = StyleSheet.create({
     container: {

@@ -1,12 +1,14 @@
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { router } from "expo-router";
 import Categories from "../components/categories";
+import { useTheme } from '../theme/theme_manager'
 
 const topics = ["pointers", "memory", "functions"]; // example topics
 
 export default function TopicsScreen() {
+  const { isDarkMode, setIsDarkMode } = useTheme();
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, isDarkMode ? styles.darkBackground : styles.lightBackground]}>
       <Categories/>
       {/* <Text style={styles.title}>Select a Topic</Text>
       {topics.map((topic, index) => (
@@ -22,13 +24,34 @@ export default function TopicsScreen() {
     </View>
   );
 }
-
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 5, backgroundColor: "#89CFF0" },
-  title: { fontSize: 24, marginBottom: 20, textAlign: "center" },
-  button: { padding: 15, backgroundColor: "#ffd33d", borderRadius: 10, marginVertical: 10 },
-  buttonText: { fontSize: 18, textAlign: "center" },
+  container: {
+    flex: 1,
+    padding: 5,
+  },
+  lightBackground: {
+    backgroundColor: "#89CFF0",
+  },
+  darkBackground: {
+    backgroundColor: "#2C2C2C",
+  },
+  title: {
+    fontSize: 24,
+    marginBottom: 20,
+    textAlign: "center",
+  },
+  button: {
+    padding: 15,
+    backgroundColor: "#ffd33d",
+    borderRadius: 10,
+    marginVertical: 10,
+  },
+  buttonText: {
+    fontSize: 18,
+    textAlign: "center",
+  },
 });
+
 
 
 
