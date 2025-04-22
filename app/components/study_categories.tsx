@@ -47,10 +47,7 @@ export default function CTopics() {
               (topic.name === 'Pointers' || topic.name === 'Arrays' && isArrayUnlocked)
                 ? styles.activeButton
                 : styles.disabledButton,
-              {
-                top: `${index * 25}%`,
-                left: '40%',
-              },
+             
             ]}
             disabled={!(topic.name === 'Pointers' || (topic.name === 'Arrays' && isArrayUnlocked))}
           >
@@ -82,18 +79,18 @@ const styles = StyleSheet.create({
     },
     pathContainer: {
       position: 'relative',
-      width: '100%',
+      width: '70%',
       height: '60%',
     },
 
 
     button: {
-      position: 'absolute',
-      borderRadius: 50,
-      width: 85,
-      height: 85,
-      borderWidth: 3, 
-      borderColor: 'white',
+      backgroundColor: '#4169E1',
+      borderRadius: 8,
+      paddingVertical: 15,
+      paddingHorizontal: 25,
+      marginVertical: 10,
+      width: 250,
       alignItems: 'center',
       justifyContent: 'center',
       elevation: 3,
@@ -101,7 +98,7 @@ const styles = StyleSheet.create({
 
 
     activeButton: {
-      backgroundColor: '#008000',
+      backgroundColor: '#4169E1',
     },
     disabledButton: {
       backgroundColor: '#808080',
