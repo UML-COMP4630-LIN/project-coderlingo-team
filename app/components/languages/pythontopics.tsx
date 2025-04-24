@@ -1,11 +1,13 @@
-import {Text, View, TouchableOpacity, Image, StyleSheet} from "react-native";
+import {Text, View, TouchableOpacity, StyleSheet} from "react-native";
 import CustomHeader from "../header";
 import { useNavigation } from '@react-navigation/native';
 import { useLayoutEffect } from "react";
- 
-// This component is for the Python screen
-// It will not be fully implemented with content
-// but will have a screen to demonstrate our app's original intention for programming languages
+
+/**
+ * This is the Python topics screen. 
+ * It will not be fully implemented with content due to time constraints
+ * However, we might implement it in the future as part of a plan to add more languages.
+ */
 
 type Props = {
     id: string;

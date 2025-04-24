@@ -1,11 +1,13 @@
-import {Text, View, TouchableOpacity, Image, StyleSheet} from "react-native";
+import {Text, View, TouchableOpacity, StyleSheet} from "react-native";
 import CustomHeader from "../header";
 import { useNavigation } from '@react-navigation/native';
 import { useLayoutEffect } from "react";
  
-// This component is for the C++ screen
-// It will not be fully implemented with content
-// but will have a screen to demonstrate pur app's original intention for programming languages
+/**
+ * This is the C++ topics screen. 
+ * It will not be fully implemented with content due to time constraints
+ * However, we might implement it in the future as part of a plan to add more languages.
+ */
 
 type Props = {
     id: string;
@@ -55,6 +57,15 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center',
       padding: 20,
+    },
+    image: {
+        height: 180,
+        width: 180,
+        padding: 10, 
+        margin: 5, 
+        borderRadius: 10, 
+        borderWidth: 3, 
+        borderColor: "#4169E1",
     },
     title: {
       fontSize: 40,
