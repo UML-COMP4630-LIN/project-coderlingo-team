@@ -29,7 +29,28 @@ const data = [
 // Display an alert when an image button is pressed. Hit the cancel button to continue.
 function imagePressed(item : Props) {
     if(item.name === 'C') {
-        router.push('/components/ctopics')
+        router.push('/components/ctopics');
+    }
+    else if(item.name === 'C++') {
+        router.push('/components/languages/cpptopics');
+    }
+    else if(item.name === 'C#') {
+        router.push('/components/languages/csharptopics');
+    }
+    else if(item.name === 'Python') {
+        router.push('/components/languages/pythontopics');
+    }
+    else if(item.name === 'Ruby') {
+        router.push('/components/languages/rubytopics');
+    }
+    else if(item.name === 'Java') {
+        router.push('/components/languages/javatopics');
+    }
+    else if(item.name === 'JavaScript') {
+        router.push('/components/languages/javascripttopics');
+    }
+    else if(item.name === 'TypeScript') {
+        router.push('/components/languages/typescripttopics');
     }
     else {
         Alert.alert('Course Not Available', `The ${item.name} course is not available yet.`, [{
