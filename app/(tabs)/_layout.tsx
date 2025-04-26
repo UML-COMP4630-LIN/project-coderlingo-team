@@ -8,7 +8,7 @@ import { useRouter } from 'expo-router';
 function SettingsButton() {
   const router = useRouter();
   return (
-    <Pressable onPress={() => router.push('/components/settings')} style={{ marginRight: 15 }}>
+    <Pressable onPress={() => router.push('/components/settings')} style={{ marginRight: 15, marginBottom: 15 }}>
       <Ionicons name="settings-outline" size={24} color="#fff" />
     </Pressable>
   );
@@ -18,7 +18,7 @@ function HeaderLogo() {
   return (
     <Image
     source={require('../../assets/images/coderlingo_logo.png')}
-    style={{ width: 120, height: 40, resizeMode: 'contain' }}
+    style={{ width: 120, height: 40, resizeMode: 'contain', marginTop: -15, marginLeft: -10 }}
     />
   );
 }
@@ -47,10 +47,10 @@ function LangMenu() {
       visible={visible}
       onDismiss={closeMenu}
       anchor={
-        <Pressable onPress={openMenu} style={{ marginRight: 15 }}>
+        <Pressable onPress={openMenu} style={{ marginRight: 5 }}>
           <Image
             source={selectedLanguage.img}
-            style={{ width: 24, height: 24, borderRadius: 12 }}
+            style={{ width: 30, height: 30, borderRadius: 12, marginTop: -10 }}
           />
         </Pressable>
       }
@@ -64,7 +64,7 @@ function LangMenu() {
           }}
           title={item.name}
           leadingIcon={() => (
-            <Image source={item.img} style={{ width: 25, height: 25, marginRight: 10 }} />
+            <Image source={item.img} style={{ width: 25, height: 25, marginRight: 10}} />
           )}
         />
       ))}
@@ -85,7 +85,7 @@ export default function TabLayout() {
         headerShadowVisible: false,
         headerTintColor: '#fff',
         tabBarStyle: {
-        backgroundColor: '#00008B',
+          backgroundColor: '#00008B',
         },
         headerLeft: () => <HeaderLogo />,
         headerTitle: () => <LangMenu />,
