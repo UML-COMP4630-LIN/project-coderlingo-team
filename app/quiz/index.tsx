@@ -12,8 +12,36 @@ export default function QuizScreen() {
   const { subtopic } = useLocalSearchParams<{ subtopic: string }>();
   const questions: Question[] = quizQuestions.filter(q => q.subtopic === subtopic);
   const current = questions[currentIndex];
-  
+
   const handleAnswer = (option: string) => {
+    const isCorrect =
+      option.trim().toLowerCase() === current.correctAnswer.trim().toLowerCase();
+    const isLastQuestion = currentIndex + 1 === questions.length;
+  
+    let updatedScore = score;
+  
+    if (isCorrect && !hasAttempted) {
+      updatedScore += 1;
+      setScore(updatedScore);
+    }
+  
+    setInputAnswer("");
+    setHasAttempted(false);
+  
+    if (!isLastQuestion) {
+      setCurrentIndex(prev => prev + 1);
+    } else {
+      router.replace({
+        pathname: "/quiz/result",
+        params: {
+          score: updatedScore.toString(),
+          total: questions.length.toString(),
+        },
+      });
+    }
+  };
+  
+  /*const handleAnswer = (option: string) => {
     const isCorrect =
       option.trim().toLowerCase() === current.correctAnswer.trim().toLowerCase();
     const isLastQuestion = currentIndex + 1 === questions.length;
@@ -43,7 +71,7 @@ export default function QuizScreen() {
     } else {
       setHasAttempted(true);
     }
-  };
+  }; */
   const progress = ((currentIndex + 1) / questions.length) * 100;
 
   return (
