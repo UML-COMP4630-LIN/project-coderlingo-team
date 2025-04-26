@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, TextInput } from "react-native";
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { quizQuestions } from "../data/questions";
 import type { Question } from "../data/questions";
 
@@ -9,41 +9,11 @@ export default function QuizScreen() {
   const [score, setScore] = useState(0);
   const [inputAnswer, setInputAnswer] = useState("");
   const [hasAttempted, setHasAttempted] = useState(false);
-
-
-  const questions: Question[] = quizQuestions;
+  const { subtopic } = useLocalSearchParams<{ subtopic: string }>();
+  const questions: Question[] = quizQuestions.filter(q => q.subtopic === subtopic);
   const current = questions[currentIndex];
-
+  
   const handleAnswer = (option: string) => {
-    const isCorrect =
-      option.trim().toLowerCase() === current.correctAnswer.trim().toLowerCase();
-    const isLastQuestion = currentIndex + 1 === questions.length;
-  
-    let updatedScore = score;
-  
-    if (isCorrect && !hasAttempted) {
-      updatedScore += 1;
-      setScore(updatedScore);
-    }
-  
-    setInputAnswer("");
-    setHasAttempted(false);
-  
-    if (!isLastQuestion) {
-      setCurrentIndex(prev => prev + 1);
-    } else {
-      router.replace({
-        pathname: "/quiz/result",
-        params: {
-          score: updatedScore.toString(),
-          total: questions.length.toString(),
-        },
-      });
-    }
-  };
-  
-
-  /*const handleAnswer = (option: string) => {
     const isCorrect =
       option.trim().toLowerCase() === current.correctAnswer.trim().toLowerCase();
     const isLastQuestion = currentIndex + 1 === questions.length;
@@ -73,7 +43,7 @@ export default function QuizScreen() {
     } else {
       setHasAttempted(true);
     }
-  };*/
+  };
   const progress = ((currentIndex + 1) / questions.length) * 100;
 
   return (

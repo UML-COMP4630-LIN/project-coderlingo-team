@@ -25,8 +25,12 @@ export default function PointerTopics() {
   }, [navigation]);
 
   const handleSubtopicPress = (subtopic: Subtopic) => {
-    router.push("/quiz");
+    router.push({
+      pathname: "/quiz",
+      params: { subtopic: subtopic.name.toLowerCase() },
+    });
   };
+  
 
   return (
     <View style={{ flex: 1 }}>
