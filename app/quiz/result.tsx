@@ -15,7 +15,7 @@ export default function ResultScreen() {
       </Text>
 
       <TouchableOpacity
-        onPress={() => router.push("/(tabs)/study")}
+        onPress={() => router.push("/(tabs)/courses")}
         style={styles.button}
       >
         <Text style={styles.buttonText}>Back to Module</Text>
