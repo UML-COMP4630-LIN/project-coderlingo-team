@@ -2,6 +2,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { router } from "expo-router";
 import Categories from "../components/study_categories";
 import { useTheme } from "../theme/theme_manager"; 
+import { useUserData } from '../context/UserContext';
 
 const topics = ["pointers", "memory", "functions"]; // example topics
 

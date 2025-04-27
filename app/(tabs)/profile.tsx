@@ -1,25 +1,44 @@
 import { Text, View, StyleSheet, Image, FlatList, TouchableOpacity } from "react-native";
 import { useLocalSearchParams, router } from "expo-router"; 
 import { useTheme } from '../theme/theme_manager'
+import { useUserData } from '../context/UserContext';
+import { useFocusEffect } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage'; 
+
+
+
 export default function ProfileScreen() {
-  const { name } = useLocalSearchParams(); 
-  const { date } = useLocalSearchParams(); 
-  const { CPP } = useLocalSearchParams(); 
-  const { C } = useLocalSearchParams(); 
-  const { python } = useLocalSearchParams(); 
+  const { date } = useLocalSearchParams();
+  const { userData, setUserData } = useUserData();
 
+  const displayName = userData.name;
 
-  const displayName = name || "No profile"; //testing name
-  const displayDate = date || "March 2nd, 2025"; //testing name
+  const displayDate = userData.date;
+  
+  const displayCPP = userData.cppProgress || 0;
+  const displayC = userData.cProgress || 0;
+  const displayPython = userData.pythonProgress || 0;
+  
+  
+  const reloadUserData = async () => {
+    const stored = await AsyncStorage.getItem('userData');
+    if (stored) {
+      const parsed = JSON.parse(stored);
+      await setUserData(parsed); 
+    }
+  };
+  
+  console.log("test", userData);
 
-  const displayCPP = CPP || 10;
-  const displayC = C || 0;
-  const displayPython = python || 0;
   const { isDarkMode } = useTheme();
   const backgroundColor = isDarkMode ? '#2C2C2C' : '#89CFF0';
   const cardBackgroundColor = isDarkMode ? '#444' : '#fff';
   const textColor = isDarkMode ? '#fff' : '#000';
   const sectionTitleColor = isDarkMode ? '#fff' : '#000';
+
+
+
+  //via CONTEXT
 
   const newProfile = [
     { id: "1", title: "Add Profile", action: () => router.push("/components/profile") },
@@ -30,44 +49,44 @@ export default function ProfileScreen() {
       <View style={styles.profileContainer}>
         <Image source={require('../../assets/images/profile.png')} style={styles.profileImage} />
         <View>
-          <Text style={[styles.username, { color: textColor }]}>{displayName}</Text>
+          <Text style={[styles.username, { color: textColor }]}>{userData.name}</Text>
           <Text style={[styles.joinDate, { color: textColor }]}>Date Joined: {displayDate}</Text>
         </View>
       </View>
-
+  
       <View style={[styles.skillsContainer, { backgroundColor: cardBackgroundColor }]}>
-        <Text style={[styles.sectionTitle, { color: sectionTitleColor }]}>Languages</Text>
-
+        <Text style={[styles.sectionTitle, { color: sectionTitleColor }]}>Language</Text>
+  
         <View style={styles.skillRow}>
           <Text style={[styles.skillText, { color: textColor }]}>C++</Text>
           <View style={styles.progressBar}>
-          <View style={[styles.progressFill, { width: "10%" }]} />
+            <View style={[styles.progressFill, { width: `${userData.cppProgress}%` }]} />
           </View>
         </View>
-
+  
         <View style={styles.skillRow}>
           <Text style={[styles.skillText, { color: textColor }]}>C</Text>
           <View style={styles.progressBar}>
-            <View style={[styles.progressFill, { width: "10%" }]} />
+            <View style={[styles.progressFill, { width: `${userData.cProgress}%` }]} />
           </View>
         </View>
-
+  
         <View style={styles.skillRow}>
           <Text style={[styles.skillText, { color: textColor }]}>Python</Text>
           <View style={styles.progressBar}>
-            <View style={[styles.progressFill, { width: "10%" }]} />
+            <View style={[styles.progressFill, { width: `${userData.pythonProgress}%` }]} />
           </View>
         </View>
       </View>
-
+  
       <View style={[styles.skillsContainer, { backgroundColor: cardBackgroundColor }]}>
         <Text style={[styles.sectionTitle, { color: sectionTitleColor }]}>Achievements</Text>
       </View>
-
+  
       <View style={[styles.skillsContainer, { backgroundColor: cardBackgroundColor }]}>
         <Text style={[styles.sectionTitle, { color: sectionTitleColor }]}>Friends</Text>
       </View>
-
+  
       <FlatList
         data={newProfile}
         keyExtractor={(item) => item.id}
@@ -79,8 +98,7 @@ export default function ProfileScreen() {
       />
     </View>
   );
-}
-
+}  
 
 const styles = StyleSheet.create({
   progressBar: {
