@@ -6,12 +6,40 @@ I certify that the work submitted with this assignment is mine and was generated
 Date: 04/02/2025
 Name: Rohan Mallu, Brendon So, William King, Shaan Gill */
 
-import { View, Text, ScrollView, StyleSheet, Pressable } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, Pressable, FlatList, TouchableOpacity } from 'react-native';
 import { useTheme } from '../theme/theme_manager';
-import { useRouter } from 'expo-router';
+import { router, useRouter } from 'expo-router';
+import { Alert } from 'react-native';
 
+type Props = {
+  id: string,
+  name: string,
+};
+
+const quizCards = [{id: '1', name: "Pointer Basics"}, {id: '2', name: "Memory Management"}, {id: '3', name: "Pointer Arithmetic"}];
+const studyCards = [{id: '1', name: "Pointers"}, {id: '2', name: "Arrays"}];
+
+function renderItem({item} : {item: Props}) {
+  return(
+    <TouchableOpacity onPress={() => itemPressed(item)}>
+      <Text style={styles.item}>{item.name}</Text>
+    </TouchableOpacity>
+  );
+
+}
+
+function itemPressed(item: Props) {
+  if(item.name === "Pointer Basics" || item.name === "Memory Management" || item.name === "Pointer Artihmetic") {
+    router.push({
+      pathname: "/quiz",
+      params: { subtopic: item.name.toLowerCase() },
+    });
+  }
+  else {
+    router.push('/Study');
+  }
+}
 export default function HomeScreen() {
-
   // dark mode settings
   const { isDarkMode } = useTheme();
   const backgroundColor = isDarkMode ? '#2C2C2C' : '#89CFF0';
@@ -29,17 +57,20 @@ export default function HomeScreen() {
 
       {/* Ideally, users should be able to continue were they left off from here*/}
       {/* Quiz Section */}
-      <Section title="Quiz" backgroundColor={sectionBackgroundColor}>
-        <Text style={[styles.noProgressText, { color: textColor }]}>n/a</Text>
+      <Section title="Quizzes" backgroundColor={backgroundColor}>
+        {/*<Text style={[styles.noProgressText, { color: textColor }]}>n/a</Text>*/}
+        <FlatList data={quizCards} renderItem={renderItem} horizontal={true} keyExtractor={(item) => item.id} numColumns={1}/>
       </Section>
+      
 
       {/* Study Section */}
-      <Section title="Study" backgroundColor={sectionBackgroundColor}>
-        <Text style={[styles.noProgressText, { color: textColor }]}>n/a</Text>
+      <Section title="Study" backgroundColor={backgroundColor}>
+        {/*<Text style={[styles.noProgressText, { color: textColor }]}>n/a</Text>*/}
+        <FlatList data={studyCards} renderItem={renderItem} horizontal={true} keyExtractor={(item) => item.id} numColumns={1}/>
       </Section>
 
       {/* Bookmarks Section */}
-      <Section title="Bookmarks" backgroundColor={sectionBackgroundColor}>
+      <Section title="Bookmarks" backgroundColor={backgroundColor}>
         {/* Button to navigate to Bookmarks */}
         <Pressable style={[styles.continueCard, { backgroundColor: buttonColor }]} onPress={() => router.push("/components/bookmarks")}>
           <Text style={[styles.continueText, { color: textColor }]}>Go to Bookmarks</Text>
@@ -76,7 +107,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   cardTitle: {
-    fontSize: 18,
+    fontSize: 30,
     fontWeight: 'bold',
     marginBottom: 10,
   },
@@ -97,4 +128,15 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 10,
   },
+  item: {
+    height: 120,
+    width: 150,
+    padding: 10, 
+    margin: 5, 
+    borderRadius: 10, 
+    backgroundColor: "#FFFFFF",
+    textAlign: "center",
+    fontSize: 20,
+    fontWeight: "bold",
+}
 });
