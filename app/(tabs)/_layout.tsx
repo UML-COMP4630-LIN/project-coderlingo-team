@@ -4,6 +4,7 @@ import { Menu, Provider } from 'react-native-paper';
 import { useState } from 'react';
 import { Pressable, Image } from 'react-native';
 import { useRouter } from 'expo-router';
+import { UserDataProvider } from '../context/UserContext'; 
 
 function SettingsButton() {
   const router = useRouter();
@@ -76,6 +77,7 @@ function LangMenu() {
 export default function TabLayout() {
   {/** CSS for header and tab bars of each screen. */}
     return(
+      <UserDataProvider>
     <Provider>
       <Tabs screenOptions={{
         tabBarActiveTintColor: '#fff',
@@ -98,6 +100,7 @@ export default function TabLayout() {
         <Tabs.Screen name="profile" options={{title: 'Profile',tabBarIcon: ({color, focused}) => (<Ionicons name={focused ? 'person-sharp' : 'person-outline'} color={color} size={24}/>),}}/>
       </Tabs>
     </Provider>
+    </UserDataProvider>
     );
     
 }

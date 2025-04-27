@@ -4,28 +4,55 @@ import { router } from "expo-router";
 import { useTheme } from "../theme/theme_manager";
 import CustomHeader from "../components/header";
 import { useNavigation } from "@react-navigation/native";
+import { useUserData } from "../context/UserContext"; 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 export default function SignUpScreen() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [date, setDate] = useState("");
-  const [password, setPassword] = useState("");
+  const [newName, setName] = useState("");
+  const [newEmail, setEmail] = useState("");
+  const [newDate, setDate] = useState("");
+  const [newPassword, setPassword] = useState("");
+  const { userData, setUserData } = useUserData(); 
+
 
   const { isDarkMode } = useTheme();
   const navigation = useNavigation();
+
+
 
   const containerBackgroundColor = isDarkMode ? "#2C2C2C" : "#89CFF0";
   const inputBackgroundColor = isDarkMode ? "#444" : "#fff";
   const textColor = isDarkMode ? "#fff" : "#000";
   const placeholderTextColor = isDarkMode ? "#aaa" : "#555";
 
+  
+
   useLayoutEffect(() => {
     navigation.setOptions({ headerShown: false });
   }, [navigation]);
 
-  const handleSignUp = () => {
-    alert("Welcome to CoderLingo!");
-    router.push({ pathname: "/profile", params: { name, date } }); 
+
+  const handleReturn = async () => {
+    const today = new Date();
+    const dates = today.toLocaleDateString('en-US', { 
+      weekday: 'long', 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric' 
+    });
+    setDate(dates);
+    const newUserData = { ...userData, name: newName, date: dates, email: newEmail, password: newPassword};
+    
+    console.log("Setting userData to:", newUserData);
+  
+    await setUserData(newUserData); 
+    await AsyncStorage.setItem('userData', JSON.stringify(newUserData)); 
+  
+    router.push({
+      pathname: "/(tabs)/profile",
+
+    });
   };
 
   return (
@@ -55,7 +82,7 @@ export default function SignUpScreen() {
           onChangeText={setPassword}
         />
 
-        <TouchableOpacity style={styles.button} onPress={handleSignUp}>
+        <TouchableOpacity style={styles.button} onPress={handleReturn}>
           <Text style={styles.buttonText}>Sign Up</Text>
         </TouchableOpacity>
       </View>
