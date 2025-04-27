@@ -5,6 +5,11 @@ export type Question = {
   type?: "mcq" | "truefalse" | "fillblank" | "match";
   subtopic: "pointer basics" | "memory management" | "pointer arithmetic" | "pointer errors" | "double pointers";
 };
+// bookmark
+export type Bookmark = {
+  question: string;
+  answerOptions: string[];
+};
 
 export const quizQuestions: Question[] = [
   {

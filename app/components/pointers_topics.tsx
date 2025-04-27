@@ -2,12 +2,14 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useNavigation, useRouter } from "expo-router";
 import { useLayoutEffect } from "react";
 import CustomHeader from "../components/header";
+import { useTheme } from '../theme/theme_manager';
 
 type Subtopic = {
   id: string;
   name: string;
 }
-// list of subtopics for pointers
+
+// List of subtopics for pointers
 const pointerSubtopics = [
   { id: '1', name: 'Pointer Basics' },
   { id: '2', name: 'Memory Management' },
@@ -20,6 +22,13 @@ export default function PointerTopics() {
   const router = useRouter();
   const navigation = useNavigation();
 
+  // dark mode settings
+  const { isDarkMode } = useTheme();
+  const backgroundColor = isDarkMode ? '#2C2C2C' : '#89CFF0';
+  const buttonBackgroundColor = isDarkMode ? '#444' : '#4169E1';
+  const buttonTextColor = '#FFF';
+  const titleColor = '#FFF';
+
   useLayoutEffect(() => {
     navigation.setOptions({ headerShown: false });
   }, [navigation]);
@@ -31,19 +40,18 @@ export default function PointerTopics() {
     });
   };
   
-
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor }}>
       <CustomHeader />
       <View style={styles.container}>
-        <Text style={styles.title}>Pointer Topics</Text>
+        <Text style={[styles.title, { color: titleColor }]}>Pointer Topics</Text>
         {pointerSubtopics.map((subtopic) => (
           <TouchableOpacity
             key={subtopic.id}
-            style={styles.button}
+            style={[styles.button, { backgroundColor: buttonBackgroundColor }]}
             onPress={() => handleSubtopicPress(subtopic)}
           >
-            <Text style={styles.buttonText}>{subtopic.name}</Text>
+            <Text style={[styles.buttonText, { color: buttonTextColor }]}>{subtopic.name}</Text>
           </TouchableOpacity>
         ))}
       </View>
@@ -54,7 +62,6 @@ export default function PointerTopics() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#89CFF0',
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
@@ -62,11 +69,9 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 40,
     fontWeight: 'bold',
-    color: '#FFFFFF',
     marginBottom: 20,
   },
   button: {
-    backgroundColor: '#4169E1',
     borderRadius: 8,
     paddingVertical: 15,
     paddingHorizontal: 25,
@@ -78,7 +83,6 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 18,
-    color: '#FFFFFF',
     fontWeight: 'bold',
   },
 });

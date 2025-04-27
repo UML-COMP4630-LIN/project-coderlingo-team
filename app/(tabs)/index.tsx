@@ -7,54 +7,54 @@ Date: 04/02/2025
 Name: Rohan Mallu, Brendon So, William King, Shaan Gill */
 
 import { View, Text, ScrollView, StyleSheet, Pressable } from 'react-native';
-import { useTheme } from '../theme/theme_manager'
+import { useTheme } from '../theme/theme_manager';
+import { useRouter } from 'expo-router';
 
 export default function HomeScreen() {
+
+  // dark mode settings
   const { isDarkMode } = useTheme();
   const backgroundColor = isDarkMode ? '#2C2C2C' : '#89CFF0';
+  const sectionBackgroundColor = isDarkMode ? '#444' : '#4169E1';
+  const buttonColor = isDarkMode ? '#28a745' : '#28a745';
+  const textColor = '#FFF';
+  
+  const router = useRouter();
 
   return (
     <ScrollView style={[styles.container, { backgroundColor }]}>
 
       {/* Welcome Banner */}
-      <Text style={styles.welcomeText}>Welcome back!</Text>
+      <Text style={[styles.welcomeText, { color: textColor }]}>Welcome back!</Text>
 
-      {/* Daily Streak */}
-      <View style={styles.card}>
-        <Text style={styles.cardTitle}>🔥 Daily Streak</Text>
-      </View>
+      {/* Ideally, users should be able to continue were they left off from here*/}
+      {/* Quiz Section */}
+      <Section title="Quiz" backgroundColor={sectionBackgroundColor}>
+        <Text style={[styles.noProgressText, { color: textColor }]}>n/a</Text>
+      </Section>
 
-      {/* Continue Learning */}
-      <Pressable style={styles.continueCard}>
-        <Text style={styles.continueText}>📘 Continue Learning</Text>
-      </Pressable>
+      {/* Study Section */}
+      <Section title="Study" backgroundColor={sectionBackgroundColor}>
+        <Text style={[styles.noProgressText, { color: textColor }]}>n/a</Text>
+      </Section>
 
-      {/* Jump Back In */}
-      <View style={styles.card}>
-        <Text style={styles.cardTitle}>🎯 Jump Back In</Text>
-      </View>
-
-       {/* Bookmarks */}
-       <View style={styles.card}>
-        <Text style={styles.cardTitle}>🔖 Bookmarks</Text>
-      </View>
+      {/* Bookmarks Section */}
+      <Section title="Bookmarks" backgroundColor={sectionBackgroundColor}>
+        {/* Button to navigate to Bookmarks */}
+        <Pressable style={[styles.continueCard, { backgroundColor: buttonColor }]} onPress={() => router.push("/components/bookmarks")}>
+          <Text style={[styles.continueText, { color: textColor }]}>Go to Bookmarks</Text>
+        </Pressable>
+      </Section>
 
     </ScrollView>
   );
 }
 
-function Category({ label, color }: { label: string; color: string }) {
+function Section({ title, children, backgroundColor }: { title: string; children: React.ReactNode; backgroundColor: string }) {
   return (
-    <View style={[styles.categoryBox, { backgroundColor: color }]}>
-      <Text style={styles.categoryText}>{label}</Text>
-    </View>
-  );
-}
-
-function BookmarkItem({ title }: { title: string }) {
-  return (
-    <View style={styles.bookmarkBox}>
-      <Text style={styles.bookmarkText}>{title}</Text>
+    <View style={[styles.card, { backgroundColor }]}>
+      <Text style={[styles.cardTitle, { color: '#FFF' }]}>{title}</Text>
+      <ScrollView style={styles.scrollableContent}>{children}</ScrollView>
     </View>
   );
 }
@@ -65,26 +65,25 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   welcomeText: {
-    color: '#fff',
     fontSize: 40,
     fontWeight: '600',
     marginBottom: 20,
     textAlign: 'center',
   },
   card: {
-    backgroundColor: '#4169E1',
     borderRadius: 12,
     padding: 16,
     marginBottom: 20,
   },
   cardTitle: {
-    color: '#fff',
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 10,
   },
+  scrollableContent: {
+    maxHeight: 300,
+  },
   continueCard: {
-    backgroundColor: '#4169E1',
     borderRadius: 12,
     padding: 16,
     marginBottom: 20,
@@ -92,45 +91,10 @@ const styles = StyleSheet.create({
   continueText: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#fff',
   },
-  lessonTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#1c1c1e',
-    marginTop: 4,
-  },
-  categories: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 10,
-  },
-  categoryBox: {
-    paddingVertical: 10,
-    paddingHorizontal: 16,
-    borderRadius: 8,
-    marginRight: 10,
-    marginBottom: 10,
-  },
-  categoryText: {
-    fontWeight: 'bold',
-    color: '#1c1c1e',
-  },
-  bookmarks: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 10,
-  },
-  bookmarkBox: {
-    backgroundColor: '#fff',
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    borderRadius: 8,
-    marginRight: 10,
-    marginBottom: 10,
-  },
-  bookmarkText: {
-    color: '#1c1c1e',
-    fontWeight: '600',
+  noProgressText: {
+    fontSize: 16,
+    textAlign: 'center',
+    marginTop: 10,
   },
 });
