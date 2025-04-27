@@ -1,8 +1,62 @@
-import { useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, TextInput } from "react-native";
+import { useEffect, useState } from "react";
+import { View, Text, TouchableOpacity, StyleSheet, TextInput, Alert } from "react-native";
 import { router, useLocalSearchParams } from "expo-router";
 import { quizQuestions } from "../data/questions";
 import type { Question } from "../data/questions";
+import type { Bookmark } from "../data/questions";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useTheme } from '../theme/theme_manager';
+
+// Function to save progress
+const saveProgress = async (quizId: string, currentIndex: number, score: number) => {
+  try {
+    await AsyncStorage.setItem(
+      quizId,
+      JSON.stringify({ currentIndex, score })
+    );
+  } catch (error) {
+    console.error('Error saving progress:', error);
+  }
+};
+
+// Function to load progress
+const loadProgress = async (quizId: string) => {
+  try {
+    const savedProgress = await AsyncStorage.getItem(quizId);
+    if (savedProgress) {
+      return JSON.parse(savedProgress);
+    }
+    return { currentIndex: 0, score: 0 };
+  } catch (error) {
+    console.error('Error loading progress:', error);
+    return { currentIndex: 0, score: 0 };
+  }
+};
+
+const loadBookmarks = async (): Promise<Bookmark[]> => {
+  try {
+    const savedBookmarks = await AsyncStorage.getItem('bookmarks');
+    return savedBookmarks ? JSON.parse(savedBookmarks) : [];
+  } catch (error) {
+    console.error('Failed to load bookmarks:', error);
+    return [];
+  }
+};
+
+const saveBookmark = async (bookmark: Bookmark) => {
+  try {
+    const bookmarks = await loadBookmarks();
+    const isAlreadyBookmarked = bookmarks.some((b: Bookmark) => b.question === bookmark.question);
+
+    if (isAlreadyBookmarked) {
+    } else {
+      bookmarks.push(bookmark);
+      await AsyncStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+    }
+  } catch (error) {
+    console.error('Failed to save bookmark:', error);
+  }
+};
 
 export default function QuizScreen() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -12,7 +66,28 @@ export default function QuizScreen() {
   const { subtopic } = useLocalSearchParams<{ subtopic: string }>();
   const questions: Question[] = quizQuestions.filter(q => q.subtopic === subtopic);
   const current = questions[currentIndex];
+  const quizId = `quiz_${subtopic}`;
 
+  // dark mode settings
+  const { isDarkMode } = useTheme();
+  const backgroundColor = isDarkMode ? '#2C2C2C' : '#89CFF0';
+  const sectionBackgroundColor = isDarkMode ? '#444' : '#4169E1';
+  const submitButtonColor = '#28a745';
+  const bookmarkButtonColor = '#007BFF';
+  const textColor = '#FFF';
+  const textInputStyle = isDarkMode
+  ? { backgroundColor: '#333', color: '#FFF' }
+  : { backgroundColor: '#FFF', color: '#000' };
+
+  useEffect(() => {
+    const loadQuizProgress = async () => {
+      const savedProgress = await loadProgress(quizId);
+      setCurrentIndex(savedProgress.currentIndex);
+      setScore(savedProgress.score);
+    };
+    loadQuizProgress();
+  }, [subtopic]);
+  
   const handleAnswer = (option: string) => {
     const isCorrect =
       option.trim().toLowerCase() === current.correctAnswer.trim().toLowerCase();
@@ -27,7 +102,10 @@ export default function QuizScreen() {
   
     setInputAnswer("");
     setHasAttempted(false);
-  
+
+    // off by 1
+    saveProgress(quizId, currentIndex + 1, updatedScore); 
+    
     if (!isLastQuestion) {
       setCurrentIndex(prev => prev + 1);
     } else {
@@ -72,23 +150,37 @@ export default function QuizScreen() {
       setHasAttempted(true);
     }
   }; */
+  const handleBookmark = async () => {
+    const bookmark = { question: current.question, answerOptions: current.options };
+    
+    const bookmarks = await loadBookmarks();
+    const isAlreadyBookmarked = bookmarks.some(b => b.question === bookmark.question);
+
+    if (isAlreadyBookmarked) {
+      Alert.alert("Already Bookmarked", "This question has already been bookmarked.");
+    } else {
+      await saveBookmark(bookmark);
+      Alert.alert("Bookmarked", "This question has been bookmarked.");
+    }
+  };
   const progress = ((currentIndex + 1) / questions.length) * 100;
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.question}>
+    <View style={[styles.container, { backgroundColor }]}>
+      <Text style={[styles.question, { color: textColor }]}>
         {currentIndex + 1}. {current.question}
       </Text>
 
       {current.type === "fillblank" ? (
         <>
           <TextInput
-            style={styles.input}
+            style={[styles.input, textInputStyle]} 
             value={inputAnswer}
             onChangeText={setInputAnswer}
             placeholder="Your answer"
             onSubmitEditing={() => handleAnswer(inputAnswer)}
             returnKeyType="done"
+            placeholderTextColor={isDarkMode ? '#aaa' : '#888'}
           />
           <TouchableOpacity
             style={styles.submitButton}
@@ -108,6 +200,13 @@ export default function QuizScreen() {
           </TouchableOpacity>
         ))
       )}
+      <TouchableOpacity 
+      style={[styles.bookmarkButton, { backgroundColor: bookmarkButtonColor }]} 
+      onPress={handleBookmark}
+      >
+        <Text style={styles.bookmarkButtonText}>Bookmark this question</Text>
+      </TouchableOpacity>
+
       <View style={styles.progressBarContainer}>
         <Text style={styles.progressText}>
           Progress: {currentIndex + 1}/{questions.length}
@@ -128,7 +227,16 @@ const styles = StyleSheet.create({
   input: { borderWidth: 1, borderColor: "#ccc", borderRadius: 10, padding: 12, fontSize: 16, marginBottom: 10 },
   submitButton: { backgroundColor: "#ffd33d", padding: 15, borderRadius: 10 },
   buttonText: { fontSize: 18, textAlign: "center" },
-
+  bookmarkButton: {
+    padding: 15, 
+    borderRadius: 10, 
+    marginTop: 15,
+  },
+  bookmarkButtonText: {
+    fontSize: 18,
+    color: "#fff",
+    textAlign: "center",
+  },
   progressBarContainer: {
     marginTop: 20,
     alignItems: "center",

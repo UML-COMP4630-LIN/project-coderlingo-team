@@ -4,16 +4,27 @@ import { useNavigation, useRouter } from 'expo-router';
 import CustomHeader from './header';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '../theme/theme_manager'; 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useState } from 'react';
+import DropDownPicker from 'react-native-dropdown-picker';
 
 export default function Settings() {
   const navigation = useNavigation();
   const router = useRouter();
   const { isDarkMode, setIsDarkMode } = useTheme();
 
+  // dark mode settings
   const backgroundColor = isDarkMode ? '#2C2C2C' : '#89CFF0';
   const cardColor = isDarkMode ? '#444' : '#4169E1';
-  const textColor = isDarkMode ? '#FFFFFF' : '#FFFFFF';
-  const iconColor = isDarkMode ? '#FFFFFF' : '#FFFFFF';
+  const textColor = '#FFFFFF';
+  const iconColor = '#FFFFFF';
+
+  const [languageOpen, setLanguageOpen] = useState(false);
+  const [languageValue, setLanguageValue] = useState('English');
+  const [languageItems, setLanguageItems] = useState([
+    { label: 'English', value: 'English' },
+    { label: 'Spanish', value: 'Spanish' },
+  ]);
 
   useLayoutEffect(() => {
     navigation.setOptions({ headerShown: false });
@@ -22,8 +33,31 @@ export default function Settings() {
   const toggleDarkMode = () => setIsDarkMode(!isDarkMode);
 
   const handleLogout = () => {
-    Alert.alert("Logged Out", "You have been logged out.");
-    router.push('/');
+    Alert.alert(
+      "Log Out",
+      "Are you sure you want to log out? This will erase all of your data.",
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          // will erase all data
+          text: "Log Out",
+          onPress: async () => {
+            try {
+              await AsyncStorage.clear();
+              setIsDarkMode(false);
+              Alert.alert("Logged Out", "You have been logged out.");
+              router.push('/');
+            } catch (error) {
+              console.error("Error resetting progress and logging out:", error);
+              Alert.alert("Error", "There was an issue logging you out.");
+            }
+          },
+        },
+      ]
+    );
   };
 
   return (
@@ -40,21 +74,28 @@ export default function Settings() {
           <Switch value={isDarkMode} onValueChange={toggleDarkMode} />
         </View>
 
-        <TouchableOpacity style={[styles.settingRow, { backgroundColor: cardColor }]} onPress={() => router.push('/components/change_language')}>
+        {/* Language Selector, does nothing */}
+        <View style={[styles.settingRow, { backgroundColor: cardColor }]}>
           <View style={styles.iconLabel}>
             <Ionicons name="language-outline" size={20} color={iconColor} />
             <Text style={[styles.settingText, { color: textColor }]}>Change Language</Text>
           </View>
-        </TouchableOpacity>
+          <DropDownPicker
+            open={languageOpen}
+            value={languageValue}
+            items={languageItems}
+            setOpen={setLanguageOpen}
+            setValue={setLanguageValue}
+            setItems={setLanguageItems}
+            containerStyle={{ width: 180 }}
+            style={{ backgroundColor: '#fff', borderColor: '#ddd', borderRadius: 5 }}
+            dropDownContainerStyle={{ backgroundColor: '#fafafa' }} 
+            labelStyle={{ color: '#000', fontSize: 16 }}
+            placeholder="Select Language"
+          />
+        </View>
 
         <Text style={[styles.sectionTitle, { color: textColor }]}>Account</Text>
-
-        <TouchableOpacity style={[styles.settingRow, { backgroundColor: cardColor }]} onPress={() => router.push('/components/change_password')}>
-          <View style={styles.iconLabel}>
-            <Ionicons name="key-outline" size={20} color={iconColor} />
-            <Text style={[styles.settingText, { color: textColor }]}>Change Password</Text>
-          </View>
-        </TouchableOpacity>
 
         <TouchableOpacity style={[styles.settingRow, { backgroundColor: cardColor }]} onPress={handleLogout}>
           <View style={styles.iconLabel}>
