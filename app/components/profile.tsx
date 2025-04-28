@@ -41,19 +41,33 @@ export default function SignUpScreen() {
       month: 'long', 
       day: 'numeric' 
     });
-    setDate(dates);
-    const newUserData = { ...userData, name: newName, date: dates, email: newEmail, password: newPassword};
-    
-    console.log("Setting userData to:", newUserData);
   
-    await setUserData(newUserData); 
-    await AsyncStorage.setItem('userData', JSON.stringify(newUserData)); 
+    setDate(dates);
+  
+    const stored = await AsyncStorage.getItem('userData');
+    
+    let latestUserData = userData;
+  
+    if (stored) {
+      latestUserData = JSON.parse(stored);
+    }
+  
+    const newUserData = { 
+      ...latestUserData,
+      name: newName,
+      date: dates,
+      email: newEmail,
+      password: newPassword
+    };
+  
+    await setUserData(newUserData);
+    await AsyncStorage.setItem('userData', JSON.stringify(newUserData));
   
     router.push({
       pathname: "/(tabs)/profile",
-
     });
   };
+  
 
   return (
     <View style={{ flex: 1 }}>

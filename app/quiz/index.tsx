@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, TextInput, Alert } from "react-native";
 import { router, useLocalSearchParams } from "expo-router";
-import { quizQuestions } from "../data/questions";
-import type { Question } from "../data/questions";
-import type { Bookmark } from "../data/questions";
+import { quizQuestions } from "../data";
+import type { Question } from "../data";
+
+import type { Bookmark } from "../data";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useTheme } from '../theme/theme_manager';
 

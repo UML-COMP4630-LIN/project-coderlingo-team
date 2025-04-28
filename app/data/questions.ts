@@ -2,9 +2,12 @@ export type Question = {
   question: string;
   options: string[];
   correctAnswer: string;
-  type?: "mcq" | "truefalse" | "fillblank" | "match";
+  type: "mcq" | "truefalse" | "fillblank" | "match";
   subtopic: "pointer basics" | "memory management" | "pointer arithmetic" | "pointer errors" | "double pointers";
 };
+
+//i updated to avoid collision w/ study (undefined bug)
+
 // bookmark
 export type Bookmark = {
   question: string;

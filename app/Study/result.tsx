@@ -10,10 +10,18 @@ export default function ResultScreen() {
   const totalQuestions = Number(total);
 
   const handleReturn = async () => {
-    const newUserData = { ...userData, cProgress: userData.cProgress+10};
+    const stored = await AsyncStorage.getItem('userData');
+    
+    let UserData = userData;
+    
+    if (stored) {
+      UserData = JSON.parse(stored);
+    }
   
-    console.log("Setting userData to:", newUserData);
-  
+    const newUserData = { 
+      ...UserData, 
+      cProgress: UserData.cProgress + 10 
+    };
     await setUserData(newUserData); 
     await AsyncStorage.setItem('userData', JSON.stringify(newUserData)); 
   
