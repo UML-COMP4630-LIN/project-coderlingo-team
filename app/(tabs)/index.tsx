@@ -6,55 +6,86 @@ I certify that the work submitted with this assignment is mine and was generated
 Date: 04/02/2025
 Name: Rohan Mallu, Brendon So, William King, Shaan Gill */
 
-import { View, Text, ScrollView, StyleSheet, Pressable } from 'react-native';
-import { useTheme } from '../theme/theme_manager'
+import { View, Text, ScrollView, StyleSheet, Pressable, FlatList, TouchableOpacity } from 'react-native';
+import { useTheme } from '../theme/theme_manager';
+import { router, useRouter } from 'expo-router';
+import { Alert } from 'react-native';
 
+type Props = {
+  id: string,
+  name: string,
+};
+
+const quizCards = [{id: '1', name: "Pointer Basics"}, {id: '2', name: "Memory Management"}, {id: '3', name: "Pointer Arithmetic"}];
+const studyCards = [{id: '1', name: "Pointers"}, {id: '2', name: "Arrays"}];
+
+function renderItem({item} : {item: Props}) {
+  return(
+    <TouchableOpacity onPress={() => itemPressed(item)}>
+      <Text style={styles.item}>{item.name}</Text>
+    </TouchableOpacity>
+  );
+
+}
+
+function itemPressed(item: Props) {
+  if(item.name === "Pointer Basics" || item.name === "Memory Management" || item.name === "Pointer Artihmetic") {
+    router.push({
+      pathname: "/quiz",
+      params: { subtopic: item.name.toLowerCase() },
+    });
+  }
+  else {
+    router.push('/Study');
+  }
+}
 export default function HomeScreen() {
+  // dark mode settings
   const { isDarkMode } = useTheme();
   const backgroundColor = isDarkMode ? '#2C2C2C' : '#89CFF0';
+  const sectionBackgroundColor = isDarkMode ? '#444' : '#4169E1';
+  const buttonColor = isDarkMode ? '#28a745' : '#28a745';
+  const textColor = '#FFF';
+  
+  const router = useRouter();
 
   return (
     <ScrollView style={[styles.container, { backgroundColor }]}>
 
       {/* Welcome Banner */}
-      <Text style={styles.welcomeText}>Welcome back!</Text>
+      <Text style={[styles.welcomeText, { color: textColor }]}>Welcome back!</Text>
 
-      {/* Daily Streak */}
-      <View style={styles.card}>
-        <Text style={styles.cardTitle}>🔥 Daily Streak</Text>
-      </View>
+      {/* Ideally, users should be able to continue were they left off from here*/}
+      {/* Quiz Section */}
+      <Section title="Quizzes" backgroundColor={backgroundColor}>
+        {/*<Text style={[styles.noProgressText, { color: textColor }]}>n/a</Text>*/}
+        <FlatList data={quizCards} renderItem={renderItem} horizontal={true} keyExtractor={(item) => item.id} numColumns={1}/>
+      </Section>
+      
 
-      {/* Continue Learning */}
-      <Pressable style={styles.continueCard}>
-        <Text style={styles.continueText}>📘 Continue Learning</Text>
-      </Pressable>
+      {/* Study Section */}
+      <Section title="Study" backgroundColor={backgroundColor}>
+        {/*<Text style={[styles.noProgressText, { color: textColor }]}>n/a</Text>*/}
+        <FlatList data={studyCards} renderItem={renderItem} horizontal={true} keyExtractor={(item) => item.id} numColumns={1}/>
+      </Section>
 
-      {/* Jump Back In */}
-      <View style={styles.card}>
-        <Text style={styles.cardTitle}>🎯 Jump Back In</Text>
-      </View>
-
-       {/* Bookmarks */}
-       <View style={styles.card}>
-        <Text style={styles.cardTitle}>🔖 Bookmarks</Text>
-      </View>
+      {/* Bookmarks Section */}
+      <Section title="Bookmarks" backgroundColor={backgroundColor}>
+        {/* Button to navigate to Bookmarks */}
+        <Pressable style={[styles.continueCard, { backgroundColor: buttonColor }]} onPress={() => router.push("/components/bookmarks")}>
+          <Text style={[styles.continueText, { color: textColor }]}>Go to Bookmarks</Text>
+        </Pressable>
+      </Section>
 
     </ScrollView>
   );
 }
 
-function Category({ label, color }: { label: string; color: string }) {
+function Section({ title, children, backgroundColor }: { title: string; children: React.ReactNode; backgroundColor: string }) {
   return (
-    <View style={[styles.categoryBox, { backgroundColor: color }]}>
-      <Text style={styles.categoryText}>{label}</Text>
-    </View>
-  );
-}
-
-function BookmarkItem({ title }: { title: string }) {
-  return (
-    <View style={styles.bookmarkBox}>
-      <Text style={styles.bookmarkText}>{title}</Text>
+    <View style={[styles.card, { backgroundColor }]}>
+      <Text style={[styles.cardTitle, { color: '#FFF' }]}>{title}</Text>
+      <ScrollView style={styles.scrollableContent}>{children}</ScrollView>
     </View>
   );
 }
@@ -65,26 +96,25 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   welcomeText: {
-    color: '#fff',
     fontSize: 40,
     fontWeight: '600',
     marginBottom: 20,
     textAlign: 'center',
   },
   card: {
-    backgroundColor: '#4169E1',
     borderRadius: 12,
     padding: 16,
     marginBottom: 20,
   },
   cardTitle: {
-    color: '#fff',
-    fontSize: 18,
+    fontSize: 30,
     fontWeight: 'bold',
     marginBottom: 10,
   },
+  scrollableContent: {
+    maxHeight: 300,
+  },
   continueCard: {
-    backgroundColor: '#4169E1',
     borderRadius: 12,
     padding: 16,
     marginBottom: 20,
@@ -92,45 +122,21 @@ const styles = StyleSheet.create({
   continueText: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#fff',
   },
-  lessonTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#1c1c1e',
-    marginTop: 4,
+  noProgressText: {
+    fontSize: 16,
+    textAlign: 'center',
+    marginTop: 10,
   },
-  categories: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 10,
-  },
-  categoryBox: {
-    paddingVertical: 10,
-    paddingHorizontal: 16,
-    borderRadius: 8,
-    marginRight: 10,
-    marginBottom: 10,
-  },
-  categoryText: {
-    fontWeight: 'bold',
-    color: '#1c1c1e',
-  },
-  bookmarks: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 10,
-  },
-  bookmarkBox: {
-    backgroundColor: '#fff',
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    borderRadius: 8,
-    marginRight: 10,
-    marginBottom: 10,
-  },
-  bookmarkText: {
-    color: '#1c1c1e',
-    fontWeight: '600',
-  },
+  item: {
+    height: 120,
+    width: 150,
+    padding: 10, 
+    margin: 5, 
+    borderRadius: 10, 
+    backgroundColor: "#FFFFFF",
+    textAlign: "center",
+    fontSize: 20,
+    fontWeight: "bold",
+}
 });

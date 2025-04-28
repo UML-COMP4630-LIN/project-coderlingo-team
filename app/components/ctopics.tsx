@@ -3,13 +3,14 @@ import { useRouter } from "expo-router";
 import CustomHeader from "../components/header";
 import { useNavigation } from '@react-navigation/native';
 import { useLayoutEffect } from "react";
+import { useTheme } from '../theme/theme_manager';
 
 type Props = {
   id: string;
   name: string;
 };
 
-// list of topics for C
+// List of topics for C
 const cTopics = [
   { id: '1', name: 'Pointers' },
   { id: '2', name: 'Arrays' },
@@ -21,6 +22,13 @@ const cTopics = [
 export default function CTopics() {
   const router = useRouter();
   const navigation = useNavigation();
+
+  // Dark mode settings
+  const { isDarkMode } = useTheme();
+  const backgroundColor = isDarkMode ? '#2C2C2C' : '#89CFF0';
+  const buttonBackgroundColor = isDarkMode ? '#444' : '#4169E1';
+  const buttonTextColor = '#FFF';
+  const titleColor = '#FFF';
 
   useLayoutEffect(() => {
     navigation.setOptions({ headerShown: false });
@@ -35,17 +43,17 @@ export default function CTopics() {
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor }}>
       <CustomHeader />
       <View style={styles.container}>
-        <Text style={styles.title}>C Programming Topics</Text>
+        <Text style={[styles.title, { color: titleColor }]}>C Programming Topics</Text>
         {cTopics.map((topic) => (
           <TouchableOpacity
             key={topic.id}
-            style={styles.button}
+            style={[styles.button, { backgroundColor: buttonBackgroundColor }]}
             onPress={() => handleButtonPress(topic)}
           >
-            <Text style={styles.buttonText}>{topic.name}</Text>
+            <Text style={[styles.buttonText, { color: buttonTextColor }]}>{topic.name}</Text>
           </TouchableOpacity>
         ))}
       </View>
@@ -56,7 +64,6 @@ export default function CTopics() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#89CFF0',
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
@@ -64,11 +71,9 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 40,
     fontWeight: 'bold',
-    color: '#FFFFFF',
     marginBottom: 20,
   },
   button: {
-    backgroundColor: '#4169E1',
     borderRadius: 8,
     paddingVertical: 15,
     paddingHorizontal: 25,
@@ -80,7 +85,6 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 18,
-    color: '#FFFFFF',
     fontWeight: 'bold',
   },
 });
