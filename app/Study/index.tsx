@@ -1,20 +1,34 @@
 import { useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView } from "react-native";
 import { router } from "expo-router";
-import { quizQuestions } from "../data/study";
-import type { Info } from "../data/study";
+import { StudyQuestions } from "../data/study";
+import type { Study } from "../data/study";
+
+
+const imageMap: { [key: string]: any } = {
+  "images/icons/image1.png": require('../../assets/images/icons/image1.png'),
+  "images/icons/image2.png": require('../../assets/images/icons/image2.png'),
+  "images/icons/image3.png": require('../../assets/images/icons/image3.png'),
+  "images/icons/image4.png": require('../../assets/images/icons/image4.png'),
+  "images/icons/image5.png": require('../../assets/images/icons/image5.png'),
+  "images/icons/image6.png": require('../../assets/images/icons/image6.png'),
+  "images/icons/image7.png": require('../../assets/images/icons/image7.png'),
+
+};
+
+
 
 export default function QuizScreen() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [score, setScore] = useState(0);
   const [hasAttempted, setHasAttempted] = useState(false);
 
-  const questions: Info[] = quizQuestions;
+  const questions: Study[] = StudyQuestions;
   const current = questions[currentIndex];
 
   const handleAnswer = (option: string) => {
     const isCorrect =
-      option.trim().toLowerCase() === current.correctAnswer.trim().toLowerCase();
+      option.trim().toLowerCase() === (current.correctAnswer|| "").trim().toLowerCase();
     const isLastQuestion = currentIndex + 1 === questions.length;
 
     let updatedScore = score;
@@ -39,34 +53,33 @@ export default function QuizScreen() {
     }
   };
 
-
   const progress = ((currentIndex + 1) / questions.length) * 100;
 
   return (
     <View style={styles.container}>
-      <Text style={styles.question}>
-        {currentIndex + 1}. {current.question}
-      </Text>
+      <View style={styles.questionBox}>
+        <ScrollView>
+          <Text style={styles.question}>
+            {currentIndex + 1}. {current.question}
+          </Text>
+        </ScrollView>
+      </View>
 
+      {current.type === "image" && current.image && (
+        <View style={styles.imageContainer}>
+          <Image
+            source={imageMap[current.image]}
+            style={styles.image}
+            resizeMode="contain"
+          />
+        </View>
+      )}
 
-      {current.type !== "next" ? (
-        current.options.map((option, i) => (
-          <TouchableOpacity
-            key={i}
-            style={styles.option}
-            onPress={() => handleAnswer(option)}
-          >
-            <Text style={styles.optionText}>{option}</Text>
-          </TouchableOpacity>
-        ))
-      ) : null}
 
 
       <View style={styles.buttonRow}>
-        <TouchableOpacity style={styles.bookmarkButton} 
-        onPress={() => {/**/}}>
-        <Text style={styles.bookmarkText}>BOOKMARK</Text> 
-          
+        <TouchableOpacity style={styles.bookmarkButton} onPress={() => {}}>
+          <Text style={styles.bookmarkText}>BOOKMARK</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -76,7 +89,6 @@ export default function QuizScreen() {
           <Text style={styles.buttonText}>Next</Text>
         </TouchableOpacity>
       </View>
-
 
       <View style={styles.progressBarContainer}>
         <Text style={styles.progressText}>
@@ -104,7 +116,6 @@ const styles = StyleSheet.create({
       justifyContent: "center",
       alignItems: "center",
       marginTop: 20,
-
     },
     bookmarkButton: {
       backgroundColor: "#18191A",
@@ -115,7 +126,14 @@ const styles = StyleSheet.create({
       fontSize: 18,
       color: "white",
     },
-    
+    questionBox: {
+      maxHeight: 220,
+      backgroundColor: "#fff",
+      padding: 10,
+      borderRadius: 10,
+      marginBottom: 20,
+      borderWidth: 1,
+    },    
     progressBarContainer: {
       marginTop: 20,
       alignItems: "center",
@@ -128,12 +146,25 @@ const styles = StyleSheet.create({
     progressBar: {
       width: "100%",
       height: 10,
-      backgroundColor: "#fff",
       borderRadius: 5,
+      backgroundColor: "#fff",
+  
+  
     },
     progressFill: {
       height: "100%",
       backgroundColor: "#008000",
       borderRadius: 5,
+      borderWidth: 1,
     },
-  });
+    imageContainer: {
+      alignItems: "center",
+      marginBottom: 20,
+    },
+    image: {
+      width: "100%",
+      height: 120,
+      borderRadius: 10,
+      backgroundColor: "transparent",
+    },
+});
