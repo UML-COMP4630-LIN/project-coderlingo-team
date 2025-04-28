@@ -9,14 +9,25 @@ export default function ResultScreen() {
   const finalScore = Number(score);
   const totalQuestions = Number(total);
 
+
   const handleReturn = async () => {
-    const newUserData = { ...userData, cProgress: userData.cProgress+10};
-  
-    console.log("Setting userData to:", newUserData);
-  
+
+    const stored = await AsyncStorage.getItem('userData');
+     
+    let UserData = userData;
+    
+    if (stored) {
+      UserData = JSON.parse(stored);
+    }
+
+    const newUserData = { 
+      ...UserData, 
+      cProgress: UserData.cProgress + 25
+    };
     await setUserData(newUserData); 
     await AsyncStorage.setItem('userData', JSON.stringify(newUserData)); 
-  
+
+    
     router.push({
       pathname: "/(tabs)/study",
       params: { unlockedArray: "true" },
