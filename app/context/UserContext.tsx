@@ -18,7 +18,9 @@ type UserDataContextType = {
   setUserData: (value: UserData) => void;
 };
 
+//for the context obj 
 const UserContext = createContext<UserDataContextType>({
+
   userData: { 
     
     name: ' ', date: ' ',email: ' ', password: ' ',
@@ -30,6 +32,7 @@ const UserContext = createContext<UserDataContextType>({
 
 export const useUserData = () => useContext(UserContext);
 
+//actual data for updating
 export const UserDataProvider = ({ children }: { children: ReactNode }) => {
   const [userData, setUserDataState] = useState<UserData>({
     name: ' ',
@@ -42,6 +45,7 @@ export const UserDataProvider = ({ children }: { children: ReactNode }) => {
     pythonProgress: 0,
   });
 
+  
   useEffect(() => {
     const loadUserData = async () => {
       try {
