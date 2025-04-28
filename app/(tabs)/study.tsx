@@ -1,6 +1,6 @@
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { router } from "expo-router";
-import Categories from "../components/study_categories";
+import StudyCategories from "../components/study_categories";
 import { useTheme } from "../theme/theme_manager"; 
 import { useUserData } from '../context/UserContext';
 
@@ -11,7 +11,7 @@ export default function TopicsScreen() {
   const containerBackgroundColor = isDarkMode ? "#2C2C2C" : "#89CFF0";
   return (
     <View style={[styles.container, { backgroundColor: containerBackgroundColor }]}>
-      <Categories/>
+      <StudyCategories/>
       {/* <Text style={styles.title}>Select a Topic</Text>
       {topics.map((topic, index) => (
         <TouchableOpacity
