@@ -7,6 +7,8 @@ import type { Bookmark } from "../data/questions";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useTheme } from '../theme/theme_manager';
 
+// Async Storage (Error)
+/*
 // Function to save progress
 const saveProgress = async (quizId: string, currentIndex: number, score: number) => {
   try {
@@ -57,6 +59,7 @@ const saveBookmark = async (bookmark: Bookmark) => {
     console.error('Failed to save bookmark:', error);
   }
 };
+*/
 
 export default function QuizScreen() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -64,7 +67,6 @@ export default function QuizScreen() {
   const [inputAnswer, setInputAnswer] = useState("");
   const [hasAttempted, setHasAttempted] = useState(false);
   const { subtopic } = useLocalSearchParams<{ subtopic: string }>();
-
   
   const quizId = `quiz_${subtopic}`;
 
@@ -78,6 +80,11 @@ export default function QuizScreen() {
   const textInputStyle = isDarkMode
   ? { backgroundColor: '#333', color: '#FFF' }
   : { backgroundColor: '#FFF', color: '#000' };
+  
+  // Async Storage (Error)
+
+  /*
+  const quizId = `quiz_${subtopic}`;
 
   useEffect(() => {
     const loadQuizProgress = async () => {
@@ -96,6 +103,7 @@ export default function QuizScreen() {
   }, [subtopic]);
 
 
+
   const questions: Question[] = quizQuestions.filter(q => q.subtopic === subtopic);
   //pointer basic fixed it load 25/25
   console.log("Subtopic is:", subtopic);
@@ -103,6 +111,7 @@ export default function QuizScreen() {
   console.log('Questions length:', questions.length);
 
   const current = questions[currentIndex];
+
 
   
   const handleAnswer = (option: string) => {
@@ -121,7 +130,7 @@ export default function QuizScreen() {
     setHasAttempted(false);
 
     // off by 1
-    saveProgress(quizId, currentIndex + 1, updatedScore); 
+    /*saveProgress(quizId, currentIndex + 1, updatedScore); */
     
     if (!isLastQuestion) {
       setCurrentIndex(prev => prev + 1);
@@ -136,6 +145,7 @@ export default function QuizScreen() {
     }
   };
   
+  // Async Storage (Error) 
   /*const handleAnswer = (option: string) => {
     const isCorrect =
       option.trim().toLowerCase() === current.correctAnswer.trim().toLowerCase();
@@ -167,7 +177,11 @@ export default function QuizScreen() {
       setHasAttempted(true);
     }
   }; */
+
+
+  
   const handleBookmark = async () => {
+    /*
     const bookmark = { question: current.question, answerOptions: current.options };
     
     const bookmarks = await loadBookmarks();
@@ -179,7 +193,10 @@ export default function QuizScreen() {
       await saveBookmark(bookmark);
       Alert.alert("Bookmarked", "This question has been bookmarked.");
     }
+    */
+   alert("Hello World");
   };
+  
   const progress = ((currentIndex + 1) / questions.length) * 100;
 
   return (
@@ -219,7 +236,7 @@ export default function QuizScreen() {
       )}
       <TouchableOpacity 
       style={[styles.bookmarkButton, { backgroundColor: bookmarkButtonColor }]} 
-      onPress={handleBookmark}
+      onPress={(handleBookmark)}
       >
         <Text style={styles.bookmarkButtonText}>Bookmark this question</Text>
       </TouchableOpacity>

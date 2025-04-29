@@ -15,7 +15,7 @@ const cTopics = [
   { id: '5', name: 'File I/O' },
 ];
 
-export default function CTopics() {
+export default function StudyCategories() {
   const router = useRouter();
   const { unlockedArray } = useLocalSearchParams();
   const isArrayUnlocked = unlockedArray === "true"; 
