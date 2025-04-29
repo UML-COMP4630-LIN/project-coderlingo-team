@@ -29,7 +29,7 @@ function renderItem({item} : {item: Props}) {
 }
 
 function itemPressed(item: Props) {
-  if(item.name === "Pointer Basics" || item.name === "Memory Management" || item.name === "Pointer Artihmetic") {
+  if(item.name === "Pointer Basics" || item.name === "Memory Management" || item.name === "Pointer Arithmetic") {
     router.push({
       pathname: "/quiz",
       params: { subtopic: item.name.toLowerCase() },
