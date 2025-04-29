@@ -7,8 +7,6 @@ import type { Bookmark } from "../data/questions";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useTheme } from '../theme/theme_manager';
 
-// Async Storage (Error)
-/*
 // Function to save progress
 const saveProgress = async (quizId: string, currentIndex: number, score: number) => {
   try {
@@ -59,7 +57,7 @@ const saveBookmark = async (bookmark: Bookmark) => {
     console.error('Failed to save bookmark:', error);
   }
 };
-*/
+
 
 export default function QuizScreen() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -81,11 +79,7 @@ export default function QuizScreen() {
   ? { backgroundColor: '#333', color: '#FFF' }
   : { backgroundColor: '#FFF', color: '#000' };
   
-  // Async Storage (Error)
-
-  /*
-  const quizId = `quiz_${subtopic}`;
-
+ 
   useEffect(() => {
     const loadQuizProgress = async () => {
       const savedProgress = await loadProgress(quizId);
@@ -130,7 +124,7 @@ export default function QuizScreen() {
     setHasAttempted(false);
 
     // off by 1
-    /*saveProgress(quizId, currentIndex + 1, updatedScore); */
+    saveProgress(quizId, currentIndex + 1, updatedScore); 
     
     if (!isLastQuestion) {
       setCurrentIndex(prev => prev + 1);
@@ -145,7 +139,6 @@ export default function QuizScreen() {
     }
   };
   
-  // Async Storage (Error) 
   /*const handleAnswer = (option: string) => {
     const isCorrect =
       option.trim().toLowerCase() === current.correctAnswer.trim().toLowerCase();
@@ -181,7 +174,6 @@ export default function QuizScreen() {
 
   
   const handleBookmark = async () => {
-    /*
     const bookmark = { question: current.question, answerOptions: current.options };
     
     const bookmarks = await loadBookmarks();
@@ -193,8 +185,7 @@ export default function QuizScreen() {
       await saveBookmark(bookmark);
       Alert.alert("Bookmarked", "This question has been bookmarked.");
     }
-    */
-   alert("Hello World");
+
   };
   
   const progress = ((currentIndex + 1) / questions.length) * 100;
