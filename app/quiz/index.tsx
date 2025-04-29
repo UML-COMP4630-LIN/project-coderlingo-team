@@ -67,8 +67,8 @@ export default function QuizScreen() {
   const [inputAnswer, setInputAnswer] = useState("");
   const [hasAttempted, setHasAttempted] = useState(false);
   const { subtopic } = useLocalSearchParams<{ subtopic: string }>();
-  const questions: Question[] = quizQuestions.filter(q => q.subtopic === subtopic);
-  const current = questions[currentIndex];
+  
+  const quizId = `quiz_${subtopic}`;
 
   // dark mode settings
   const { isDarkMode } = useTheme();
@@ -89,12 +89,30 @@ export default function QuizScreen() {
   useEffect(() => {
     const loadQuizProgress = async () => {
       const savedProgress = await loadProgress(quizId);
-      setCurrentIndex(savedProgress.currentIndex);
-      setScore(savedProgress.score);
+      const questionsForThisQuiz = quizQuestions.filter(q => q.subtopic === subtopic);
+
+      if (savedProgress.currentIndex >= questionsForThisQuiz.length) {
+        setCurrentIndex(0);
+        setScore(0);
+      } else {
+        setCurrentIndex(savedProgress.currentIndex);
+        setScore(savedProgress.score);
+      }
     };
     loadQuizProgress();
   }, [subtopic]);
-  */
+
+
+
+  const questions: Question[] = quizQuestions.filter(q => q.subtopic === subtopic);
+  //pointer basic fixed it load 25/25
+  console.log("Subtopic is:", subtopic);
+  console.log('Current index:', currentIndex);
+  console.log('Questions length:', questions.length);
+
+  const current = questions[currentIndex];
+
+
   
   const handleAnswer = (option: string) => {
     const isCorrect =
