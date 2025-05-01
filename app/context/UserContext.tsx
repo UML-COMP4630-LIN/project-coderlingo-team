@@ -1,3 +1,8 @@
+ /*
+    * File: UserContext.tsx
+    * Description: Props and other definitions for storing user data 
+*/
+
 import React, { createContext, useState, useContext, useEffect, ReactNode } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 

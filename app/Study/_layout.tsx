@@ -1,3 +1,8 @@
+ /*
+    * File: _layout.tsx
+    * Description: Layout for the study modules
+*/
+
 import { Stack } from "expo-router";
 
 export default function StudyLayout() {

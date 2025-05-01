@@ -1,3 +1,8 @@
+ /*
+    * File: bookmarks.tsx
+    * Description: The profile screen contains the user's bookmarked questions 
+*/
+
 import { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, FlatList, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -5,7 +10,7 @@ import { useTheme } from '../theme/theme_manager';
 
 export default function BookmarksScreen() {
 
-  // dark mode settings
+  {/* Dark mode settings */}
   const { isDarkMode } = useTheme();
   const backgroundColor = isDarkMode ? '#2C2C2C' : '#89CFF0';
   const cardColor = isDarkMode ? '#444' : '#4169E1';
@@ -13,8 +18,10 @@ export default function BookmarksScreen() {
 
   const removeButtonColor = '#ff6347';
 
+  {/* Update state of bookmarks */}
   const [bookmarks, setBookmarks] = useState<{ question: string; answerOptions: string[] }[]>([]);
 
+  {/* Load all of the user's bookmarks  */}
   useEffect(() => {
     const loadBookmarks = async () => {
       try {
@@ -28,6 +35,7 @@ export default function BookmarksScreen() {
     loadBookmarks();
   }, []);
 
+  {/* Remove a bookmark from the bookmarks page */}
   const removeBookmark = async (index: number) => {
     Alert.alert('Remove Bookmark', 'Are you sure you want to remove this bookmark?', [
       {
@@ -46,6 +54,7 @@ export default function BookmarksScreen() {
     ]);
   };
 
+  {/* Return list of bookmarks on the bookmarks screen that are pressable */}
   return (
     <View style={[styles.container, { backgroundColor }]}>
       <Text style={[styles.title, { color: textColor }]}>Bookmarked Questions</Text>

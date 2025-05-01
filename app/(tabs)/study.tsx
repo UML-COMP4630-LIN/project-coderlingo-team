@@ -4,29 +4,28 @@ import StudyCategories from "../components/study_categories";
 import { useTheme } from "../theme/theme_manager"; 
 import { useUserData } from '../context/UserContext';
 
-const topics = ["pointers", "memory", "functions"]; // example topics
+ /*
+    * File: study.tsx
+    * Description: The study screen contains the list of study modules for the user to study before taking a quiz. 
+*/
 
-export default function TopicsScreen() {
+{/* Main function for StudyScreen */}
+export default function StudyScreen() {
+
+  {/* Dark Mode Toggle Settingd */}
   const { isDarkMode } = useTheme();
   const containerBackgroundColor = isDarkMode ? "#2C2C2C" : "#89CFF0";
+
+
+  {/* A list of C topics to study */}
   return (
     <View style={[styles.container, { backgroundColor: containerBackgroundColor }]}>
       <StudyCategories/>
-      {/* <Text style={styles.title}>Select a Topic</Text>
-      {topics.map((topic, index) => (
-        <TouchableOpacity
-          key={index}
-          style={styles.button}
-          onPress={() => router.push({ pathname: "/quiz", params: { topic } })}
-        >
-          <Text style={styles.buttonText}>{topic}</Text>
-        </TouchableOpacity>
-      ))}
-      **/ }
     </View>
   );
 }
 
+{/* Styling for Study Screen */}
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 5, backgroundColor: "#89CFF0" },
   title: { fontSize: 24, marginBottom: 20, textAlign: "center" },

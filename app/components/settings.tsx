@@ -1,3 +1,8 @@
+ /*
+    * File: settings.tsx
+    * Description: All of the content on the settings screen
+*/
+
 import { View, Text, StyleSheet, TouchableOpacity, Switch, ScrollView, Alert } from 'react-native';
 import { useLayoutEffect } from 'react';
 import { useNavigation, useRouter } from 'expo-router';
@@ -13,12 +18,13 @@ export default function Settings() {
   const router = useRouter();
   const { isDarkMode, setIsDarkMode } = useTheme();
 
-  // dark mode settings
+  {/* dark mode settings */}
   const backgroundColor = isDarkMode ? '#2C2C2C' : '#89CFF0';
   const cardColor = isDarkMode ? '#444' : '#4169E1';
   const textColor = '#FFFFFF';
   const iconColor = '#FFFFFF';
 
+  {/* Set Language Option */}
   const [languageOpen, setLanguageOpen] = useState(false);
   const [languageValue, setLanguageValue] = useState('English');
   const [languageItems, setLanguageItems] = useState([
@@ -26,12 +32,15 @@ export default function Settings() {
     { label: 'Spanish', value: 'Spanish' },
   ]);
 
+  {/* Remove Expo Ehader */}
   useLayoutEffect(() => {
     navigation.setOptions({ headerShown: false });
   }, [navigation]);
 
+  {/* Toggle Dark Mode */}
   const toggleDarkMode = () => setIsDarkMode(!isDarkMode);
 
+  {/* Logout Button + Alert */}
   const handleLogout = () => {
     Alert.alert(
       "Log Out",
@@ -63,9 +72,11 @@ export default function Settings() {
   return (
     <View style={[styles.outerContainer, { backgroundColor }]}>
       <CustomHeader />
+        {/* Settings Header */}
       <ScrollView style={{ flex: 1 }} contentContainerStyle={styles.container}>
         <Text style={[styles.sectionTitle, { color: textColor }]}>Preferences</Text>
 
+        {/* Dark Mode Toggle */}
         <View style={[styles.settingRow, { backgroundColor: cardColor }]}>
           <View style={styles.iconLabel}>
             <Ionicons name="moon-outline" size={20} color={iconColor} />
@@ -97,6 +108,7 @@ export default function Settings() {
 
         <Text style={[styles.sectionTitle, { color: textColor }]}>Account</Text>
 
+        {/* Logout Button */}
         <TouchableOpacity style={[styles.settingRow, { backgroundColor: cardColor }]} onPress={handleLogout}>
           <View style={styles.iconLabel}>
             <Ionicons name="log-out-outline" size={20} color={iconColor} />
@@ -104,6 +116,7 @@ export default function Settings() {
           </View>
         </TouchableOpacity>
 
+        {/* About Info */}
         <Text style={[styles.sectionTitle, { color: textColor }]}>About</Text>
 
         <View style={[styles.settingRow, { backgroundColor: cardColor }]}>

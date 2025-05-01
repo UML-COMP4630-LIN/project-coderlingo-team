@@ -1,8 +1,14 @@
+ /*
+    * File: result.tsx
+    * Description: Result screen for result module
+*/
+
 import { useLocalSearchParams, router } from "expo-router";
 import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 import { useUserData } from "../context/UserContext"; 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+{/* Use AsyncStorage to return result screen and the next module */}
 export default function ResultScreen() {
   const { score, total } = useLocalSearchParams();
   const { userData, setUserData } = useUserData(); 

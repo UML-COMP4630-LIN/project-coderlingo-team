@@ -1,3 +1,8 @@
+ /*
+    * File: result.tsx
+    * Description: Renders data for the final score 
+*/
+
 import { useLocalSearchParams, router } from "expo-router";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 

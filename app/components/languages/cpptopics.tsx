@@ -1,14 +1,16 @@
+ /*
+    * File: cpptopics.tsx
+    * Description: This is the C++ topics screen. 
+    * It will not be fully implemented with content due to time constraints. 
+    * However, we might implement it in the future as part of a plan to add more languages. 
+*/
+
 import {Text, View, TouchableOpacity, StyleSheet} from "react-native";
 import CustomHeader from "../header";
 import { useNavigation } from '@react-navigation/native';
 import { useLayoutEffect } from "react";
- 
-/**
- * This is the C++ topics screen. 
- * It will not be fully implemented with content due to time constraints
- * However, we might implement it in the future as part of a plan to add more languages.
- */
 
+{/* Define list of topics */}
 type Props = {
     id: string;
     name: string;
@@ -23,15 +25,18 @@ const cpptopics = [
 ];
 
 export default function CPPTopics() {
+    {/* Remove expo header */}
     const navigation = useNavigation();
     useLayoutEffect(() => {
         navigation.setOptions({headerShown: false});
     }, [navigation]);
     
+    {/* Alert for unavailable topics */}
     const handleButtonPress = (topic: Props) => {
         alert(`The ${topic.name} module is not available yet.`);
     };
 
+    {/* List of pressable topics */}
     return(
         <View style={{ flex: 1 }}>
             <CustomHeader/>
