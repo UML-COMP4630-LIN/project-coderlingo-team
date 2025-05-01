@@ -1,3 +1,8 @@
+
+ /*
+    * File: index.tsx
+    * Description: Renders all of the data on the quiz screen
+*/
 import { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, TextInput, Alert } from "react-native";
 import { router, useLocalSearchParams } from "expo-router";

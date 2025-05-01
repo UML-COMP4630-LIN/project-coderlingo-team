@@ -3,27 +3,25 @@ import { router } from "expo-router";
 import Categories from "../components/categories";
 import { useTheme } from '../theme/theme_manager'
 
-const topics = ["pointers", "memory", "functions"]; // example topics
+/*
+    * File: courses.tsx
+    * Description: This is the screen for displaying the different programming languages available. Only C 
+  is functional for now
+*/
 
 export default function TopicsScreen() {
+  {/* adjust screen for dark mode */}
   const { isDarkMode, setIsDarkMode } = useTheme();
+
+  {/* list of all of the programming languages on the courses screen */}
   return (
     <View style={[styles.container, isDarkMode ? styles.darkBackground : styles.lightBackground]}>
       <Categories/>
-      {/* <Text style={styles.title}>Select a Topic</Text>
-      {topics.map((topic, index) => (
-        <TouchableOpacity
-          key={index}
-          style={styles.button}
-          onPress={() => router.push({ pathname: "/quiz", params: { topic } })}
-        >
-          <Text style={styles.buttonText}>{topic}</Text>
-        </TouchableOpacity>
-      ))}
-      **/ }
     </View>
   );
 }
+
+{ /* Styling for Courses Screen */}
 const styles = StyleSheet.create({
   container: {
     flex: 1,

@@ -6,6 +6,10 @@ import { Pressable, Image } from 'react-native';
 import { useRouter } from 'expo-router';
 import { UserDataProvider } from '../context/UserContext'; 
 
+ {/** This is the main layout fiel for all of the tabs */}
+
+
+{/* A button at the top right of the screen to access the settings page */}
 function SettingsButton() {
   const router = useRouter();
   return (
@@ -15,6 +19,7 @@ function SettingsButton() {
   );
 }
 
+{/*The logo for CoderLingo in the header */}
 function HeaderLogo() {
   return (
     <Image
@@ -24,12 +29,15 @@ function HeaderLogo() {
   );
 }
 
-//WIP selection for entire app
+{/* A drop down menu of different programming languages at the center of the header */}
+
 function LangMenu() {
+  // State functions for opening and closing the language 
   const [visible, setVisible] = useState(false);
   const openMenu = () => setVisible(true);
   const closeMenu = () => setVisible(false);
 
+  // List of languages available in the drop down menu
   const data = [
     { id: '1', name: 'C', img: require('../../assets/images/icons/clang.png') },
     { id: '2', name: 'C++', img: require('../../assets/images/icons/cplusplus.png') },
@@ -41,8 +49,10 @@ function LangMenu() {
     { id: '8', name: 'TypeScript', img: require('../../assets/images/icons/typescript.png') },
   ];
 
+  // State function for changing the language
   const [selectedLanguage, setSelectedLanguage] = useState(data[0]);
 
+  {/* Create the header for the top of the tab screens */}
   return (
     <Menu
       visible={visible}

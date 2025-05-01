@@ -1,3 +1,8 @@
+ /*
+    * File: theme_manager.tsx
+    * Description: Render all the colors for the app when dark mode is toggled on or off
+*/
+
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 

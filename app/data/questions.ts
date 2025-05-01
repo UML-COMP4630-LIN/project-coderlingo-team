@@ -1,3 +1,8 @@
+ /*
+    * File: questions.ts
+    * Description: A list of quiz questions for the quizzes 
+*/
+
 export type Question = {
   question: string;
   options: string[];

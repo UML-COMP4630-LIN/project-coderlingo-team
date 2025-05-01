@@ -1,3 +1,8 @@
+ /*
+    * File: index.tsx
+    * Description: Render all the info for the study modules
+*/
+
 import { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView } from "react-native";
 import { router } from "expo-router";
@@ -5,6 +10,7 @@ import { StudyQuestions } from "../data/study";
 import type { Study } from "../data/study";
 
 
+// Images needed for the passages
 const imageMap: { [key: string]: any } = {
   "images/icons/image1.png": require('../../assets/images/icons/image1.png'),
   "images/icons/image2.png": require('../../assets/images/icons/image2.png'),
@@ -19,6 +25,7 @@ const imageMap: { [key: string]: any } = {
 
 
 export default function QuizScreen() {
+  {/* Data for moving to the next passage */}
   const [currentIndex, setCurrentIndex] = useState(0);
   const [score, setScore] = useState(0);
   const [hasAttempted, setHasAttempted] = useState(false);

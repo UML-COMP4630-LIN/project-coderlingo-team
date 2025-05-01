@@ -1,3 +1,8 @@
+ /*
+    * File: change_language.tsx
+    * Description: Component for the Change Language option on the Settings page. 
+*/
+
 import { View, Text } from 'react-native';
 
 export default function ChangeLanguage() {

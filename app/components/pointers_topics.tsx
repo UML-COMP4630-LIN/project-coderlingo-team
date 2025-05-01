@@ -1,15 +1,21 @@
+ /*
+    * File: pointers_topics.tsx
+    * Description: All of the subtopics for pointers. Each subtopic has a quiz 
+*/
+
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useNavigation, useRouter } from "expo-router";
 import { useLayoutEffect } from "react";
 import CustomHeader from "../components/header";
 import { useTheme } from '../theme/theme_manager';
 
+{/* Define properties for list of topics */}
 type Subtopic = {
   id: string;
   name: string;
 }
 
-// List of subtopics for pointers
+{/* List of topics for pointers */}
 const pointerSubtopics = [
   { id: '1', name: 'Pointer Basics' },
   { id: '2', name: 'Memory Management' },
@@ -22,17 +28,19 @@ export default function PointerTopics() {
   const router = useRouter();
   const navigation = useNavigation();
 
-  // dark mode settings
+  {/* dark mode settings */}
   const { isDarkMode } = useTheme();
   const backgroundColor = isDarkMode ? '#2C2C2C' : '#89CFF0';
   const buttonBackgroundColor = isDarkMode ? '#444' : '#4169E1';
   const buttonTextColor = '#FFF';
   const titleColor = '#FFF';
 
+  {/* Remove expo header */}
   useLayoutEffect(() => {
     navigation.setOptions({ headerShown: false });
   }, [navigation]);
 
+  {/* push the appropriate quiz to the appropriate subtopic */}
   const handleSubtopicPress = (subtopic: Subtopic) => {
     router.push({
       pathname: "/quiz",
@@ -40,6 +48,7 @@ export default function PointerTopics() {
     });
   };
   
+  {/* A list of subtopics with quizzes attached to them */}
   return (
     <View style={{ flex: 1, backgroundColor }}>
       <CustomHeader />
@@ -59,6 +68,7 @@ export default function PointerTopics() {
   );
 }
 
+{/* Styling for pointer topics component */}
 const styles = StyleSheet.create({
   container: {
     flex: 1,

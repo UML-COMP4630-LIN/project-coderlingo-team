@@ -1,11 +1,14 @@
+ /*
+    * File: categories.tsx
+    * Description: Code for rendering list of languages on the courses screen. 
+*/
+
 import { router } from "expo-router";
 import * as React from "react";
 import { Image, FlatList, StyleSheet, View, TouchableOpacity, Alert } from "react-native";
 import { useTheme } from "../theme/theme_manager"; 
-{/** Code for the list of categories in the courses screen. */}
 
-
-// define property values for data
+{/* define property values for data*/}
 type Props = {
     id: string;
     name: string;
@@ -13,7 +16,7 @@ type Props = {
 }
 
 
-// define data set
+{/* define data set*/}
 const data = [
     {id: '1', name: 'C', img: require('../../assets/images/icons/clang.png')},
     {id: '2', name: 'C++', img: require('../../assets/images/icons/cplusplus.png')},
@@ -26,7 +29,11 @@ const data = [
 ];
 
 
-// Display an alert when an image button is pressed. Hit the cancel button to continue.
+/**
+ * 
+ * @param item The name of the programming language and its image
+ * @returns The topics screen corresponding to the selected programming language
+ */
 function imagePressed(item : Props) {
     if(item.name === 'C') {
         router.push('/components/ctopics');
@@ -61,8 +68,15 @@ function imagePressed(item : Props) {
     };
 };
 
-// Dim the image buttons when they are pressed on
-// return a clickable image for each button in the data list
+
+{/* Dim the image buttons when they are pressed on*/}
+{/* return a clickable image for each button in the data list */}
+
+/**
+ * 
+ * @param item A programming language and it's image 
+ * @returns A pressable object for the language
+ */
 function renderItem({ item }: {item: Props}) {
     return (
         <TouchableOpacity onPress={() => imagePressed(item)}>
@@ -77,11 +91,12 @@ function renderItem({ item }: {item: Props}) {
 
 // return a View with a FlatList displaying the different programming languages in two colummns.
 export default function Categories() {
-    // Update the state of a clicked image
+    {/* Update the state of a clicked image */}
     const [images, setImages] = React.useState(data);
     const { isDarkMode } = useTheme();
     const containerBackgroundColor = isDarkMode ? "#2C2C2C" : "#89CFF0";
 
+    {/** Return the list of programming languages */}
     return(
         <View style={[styles.container, { backgroundColor: containerBackgroundColor }]}>
             <FlatList data={images} renderItem={renderItem} keyExtractor={(item) => item.id} numColumns={2}/> 
@@ -90,7 +105,7 @@ export default function Categories() {
     );
 }
 
-// CSS for the Categories component
+{ /* Styles for the Categories component */}
 const styles = StyleSheet.create({
     // Style the container to center the elements
     container: {

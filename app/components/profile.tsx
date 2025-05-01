@@ -1,3 +1,8 @@
+ /*
+    * File: profile.tsx
+    * Description: All of the content on the sign-up screen
+*/
+
 import { useState, useLayoutEffect } from "react";
 import { Text, View, TextInput, TouchableOpacity, StyleSheet } from "react-native";
 import { router } from "expo-router"; 
@@ -9,31 +14,35 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
  
  export default function SignUpScreen() {
+
+  {/* State functions for entering data */}
    const [newName, setName] = useState("");
    const [newEmail, setEmail] = useState("");
    const [newDate, setDate] = useState("");
    const [newPassword, setPassword] = useState("");
    const { userData, setUserData } = useUserData(); 
  
- 
    const { isDarkMode } = useTheme();
    const navigation = useNavigation();
  
  
- 
+   {/* Toggle Night Mode */}
    const containerBackgroundColor = isDarkMode ? "#2C2C2C" : "#89CFF0";
    const inputBackgroundColor = isDarkMode ? "#444" : "#fff";
    const textColor = isDarkMode ? "#fff" : "#000";
    const placeholderTextColor = isDarkMode ? "#aaa" : "#555";
  
  
- 
+ {/* Remove Expo Header */}
    useLayoutEffect(() => {
      navigation.setOptions({ headerShown: false });
    }, [navigation]);
  
  
+   {/* Use AsyncStorage to retrieve and store the user's data */}
    const handleReturn = async () => {
+
+    {/* Generate, set, and store the date */}
     const today = new Date();
     const dates = today.toLocaleDateString('en-US', { 
       weekday: 'long', 
@@ -51,6 +60,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
       latestUserData = JSON.parse(stored);
     }
   
+    {/* Set the user data */}
     const newUserData = { 
       ...latestUserData,
       name: newName,
@@ -64,25 +74,30 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
     await setUserData(newUserData);
     await AsyncStorage.setItem('userData', JSON.stringify(newUserData));
   
+    {/* Push the sign up screen */}
     router.push({
       pathname: "/(tabs)/profile",
     });
   };
   
    
- 
+
+   {/* Return Signup Content */}
    return (
      <View style={{ flex: 1 }}>
        <CustomHeader />
        <View style={[styles.container, { backgroundColor: containerBackgroundColor }]}>
          <Text style={[styles.title, { color: 'white' }]}>Signup/Log in</Text>
  
+          {/* Name field */}
          <TextInput
            style={[styles.input, { backgroundColor: inputBackgroundColor, color: textColor }]}
            placeholder="Name"
            placeholderTextColor={placeholderTextColor}
            onChangeText={setName}
          />
+
+         {/* Email field */}
          <TextInput
            style={[styles.input, { backgroundColor: inputBackgroundColor, color: textColor }]}
            placeholder="Email"
@@ -90,6 +105,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
            placeholderTextColor={placeholderTextColor}
            onChangeText={setEmail}
          />
+
+         {/* Password field */}
          <TextInput
            style={[styles.input, { backgroundColor: inputBackgroundColor, color: textColor }]}
            placeholder="Password"
@@ -98,6 +115,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
            onChangeText={setPassword}
          />
  
+          {/* Signup Button */}
          <TouchableOpacity style={styles.button} onPress={handleReturn}>
            <Text style={styles.buttonText}>Sign Up</Text>
          </TouchableOpacity>

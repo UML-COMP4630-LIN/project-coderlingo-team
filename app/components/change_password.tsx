@@ -1,3 +1,8 @@
+ /*
+    * File: change_password.tsx
+    * Description: Component for the Change Password option on the Settings page. 
+*/
+
 import { View, Text } from 'react-native';
 
 export default function ChangePassword() {

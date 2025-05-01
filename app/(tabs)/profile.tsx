@@ -5,9 +5,14 @@ import { useUserData } from '../context/UserContext';
 import { useFocusEffect } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage'; 
 
-
-
+ /*
+    * File: profile.tsx
+    * Description: The profile screen contains profile information, a sign-up button and other sensitive info. 
+*/
+ 
+{/* Main function for Profile screen */}
 export default function ProfileScreen() {
+  {/* Display the user's name and date  */}
   const { date } = useLocalSearchParams();
   const { userData, setUserData } = useUserData();
 
@@ -15,11 +20,13 @@ export default function ProfileScreen() {
 
   const displayDate = userData.date;
   
+  {/* Display the user's progress on different programming languages */}
   const displayCPP = userData.cppProgress || 0;
   const displayC = userData.cProgress || 0;
   const displayPython = userData.pythonProgress || 0;
   
   
+  {/* Use AsyncStorage to save the user's data and progress  */}
   const reloadUserData = async () => {
     const stored = await AsyncStorage.getItem('userData');
     if (stored) {
@@ -30,6 +37,7 @@ export default function ProfileScreen() {
   
   console.log("test", userData);
 
+  {/* Toggle light and dark mode */}
   const { isDarkMode } = useTheme();
   const backgroundColor = isDarkMode ? '#2C2C2C' : '#89CFF0';
   const cardBackgroundColor = isDarkMode ? '#444' : '#fff';
@@ -39,13 +47,14 @@ export default function ProfileScreen() {
 
 
   //via CONTEXT
-
+  {/* Create a new profile using the new profile button and login screen  */}
   const newProfile = [
     { id: "1", title: "Add Profile", action: () => router.push("/components/profile") },
   ];
 
   return (
     <View style={[styles.Container, { backgroundColor }]}>
+      {/* User's name and date joined  */}
       <View style={styles.profileContainer}>
         <Image source={require('../../assets/images/profile.png')} style={styles.profileImage} />
         <View>
@@ -54,9 +63,11 @@ export default function ProfileScreen() {
         </View>
       </View>
   
+      {/* Display the user's progress on different languages  */}
       <View style={[styles.skillsContainer, { backgroundColor: cardBackgroundColor }]}>
         <Text style={[styles.sectionTitle, { color: sectionTitleColor }]}>Language</Text>
   
+        {/* Progress on C++  */}
         <View style={styles.skillRow}>
           <Text style={[styles.skillText, { color: textColor }]}>C++</Text>
           <View style={styles.progressBar}>
@@ -64,6 +75,7 @@ export default function ProfileScreen() {
           </View>
         </View>
   
+       {/* Progress on C  */}
         <View style={styles.skillRow}>
           <Text style={[styles.skillText, { color: textColor }]}>C</Text>
           <View style={styles.progressBar}>
@@ -71,6 +83,7 @@ export default function ProfileScreen() {
           </View>
         </View>
   
+       {/* Progress on Python  */}
         <View style={styles.skillRow}>
           <Text style={[styles.skillText, { color: textColor }]}>Python</Text>
           <View style={styles.progressBar}>
@@ -79,14 +92,17 @@ export default function ProfileScreen() {
         </View>
       </View>
   
+      {/* List of achievements, which are not fully implemented  */}
       <View style={[styles.skillsContainer, { backgroundColor: cardBackgroundColor }]}>
         <Text style={[styles.sectionTitle, { color: sectionTitleColor }]}>Achievements</Text>
       </View>
   
+      {/* List of friends, which is not fully  */}
       <View style={[styles.skillsContainer, { backgroundColor: cardBackgroundColor }]}>
         <Text style={[styles.sectionTitle, { color: sectionTitleColor }]}>Friends</Text>
       </View>
   
+      {/* Button for adding a new profile  */}
       <FlatList
         data={newProfile}
         keyExtractor={(item) => item.id}
@@ -100,6 +116,7 @@ export default function ProfileScreen() {
   );
 }  
 
+{/* Styling for profile screen  */}
 const styles = StyleSheet.create({
   progressBar: {
     width: "100%",

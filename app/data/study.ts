@@ -1,3 +1,8 @@
+ /*
+    * File: study.ts
+    * Description: A list of study passages for the study modules 
+*/
+
 export type Study = {
   question: string;
   options?: string[];
