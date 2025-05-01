@@ -6,11 +6,9 @@ type UserData = {
   date: string;
   email: string;
   password: string;
-
   cppProgress: number;
   cProgress: number;
   pythonProgress: number;
-
 };
 
 type UserDataContextType = {
@@ -20,12 +18,8 @@ type UserDataContextType = {
 
 //for the context obj 
 const UserContext = createContext<UserDataContextType>({
-
   userData: { 
-    
     name: ' ', date: ' ',email: ' ', password: ' ',
-    
-    
     cppProgress: 0, cProgress: 0, pythonProgress: 0 },
   setUserData: () => {},
 });
@@ -39,7 +33,6 @@ export const UserDataProvider = ({ children }: { children: ReactNode }) => {
     email: ' ',
     password:' ',
     date:' ',
-    
     cppProgress: 0,
     cProgress: 0,
     pythonProgress: 0,
@@ -73,7 +66,6 @@ export const UserDataProvider = ({ children }: { children: ReactNode }) => {
     await saveUserData(value);
   };
   
-
   return (
     <UserContext.Provider value={{ userData, setUserData }}>
       {children}
