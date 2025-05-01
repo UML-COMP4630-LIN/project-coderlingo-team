@@ -106,7 +106,6 @@ const styles = StyleSheet.create({
     textAlign: "center", 
     marginBottom: 20 
   },
-
   input: { 
     borderWidth: 1,
     borderColor: "#ccc",
