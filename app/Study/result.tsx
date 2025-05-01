@@ -2,31 +2,26 @@ import { useLocalSearchParams, router } from "expo-router";
 import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 import { useUserData } from "../context/UserContext"; 
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
 export default function ResultScreen() {
   const { score, total } = useLocalSearchParams();
   const { userData, setUserData } = useUserData(); 
-
   const finalScore = Number(score);
   const totalQuestions = Number(total);
-
-
   const handleReturn = async () => {
+  const stored = await AsyncStorage.getItem('userData');
+  let UserData = userData;
+  
+  if (stored) {
+    UserData = JSON.parse(stored);
+  }
 
-    const stored = await AsyncStorage.getItem('userData');
-     
-    let UserData = userData;
-    
-    if (stored) {
-      UserData = JSON.parse(stored);
-    }
-
-    const newUserData = { 
-      ...UserData, 
-      cProgress: UserData.cProgress + 25
-    };
-    await setUserData(newUserData); 
-    await AsyncStorage.setItem('userData', JSON.stringify(newUserData)); 
-
+  const newUserData = { 
+    ...UserData, 
+    cProgress: UserData.cProgress + 25
+  };
+  await setUserData(newUserData); 
+  await AsyncStorage.setItem('userData', JSON.stringify(newUserData)); 
     
     router.push({
       pathname: "/(tabs)/study",
@@ -42,7 +37,6 @@ export default function ResultScreen() {
       />
       <Text style={styles.congratsText}>Congrats!</Text>
       <Text style={styles.completedText}>Completed Pointers Section</Text>
-
       <TouchableOpacity
         onPress={handleReturn} 
         style={styles.button}
