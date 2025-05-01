@@ -9,7 +9,6 @@ import { router } from "expo-router";
 import { StudyQuestions } from "../data/study";
 import type { Study } from "../data/study";
 
-
 // Images needed for the passages
 const imageMap: { [key: string]: any } = {
   "images/icons/image1.png": require('../../assets/images/icons/image1.png'),
@@ -21,8 +20,6 @@ const imageMap: { [key: string]: any } = {
   "images/icons/image7.png": require('../../assets/images/icons/image7.png'),
 
 };
-
-
 
 export default function QuizScreen() {
   {/* Data for moving to the next passage */}
@@ -37,14 +34,12 @@ export default function QuizScreen() {
     const isCorrect =
       option.trim().toLowerCase() === (current.correctAnswer|| "").trim().toLowerCase();
     const isLastQuestion = currentIndex + 1 === questions.length;
-
     let updatedScore = score;
-
+    
     if (isCorrect && !hasAttempted) {
       updatedScore += 1;
       setScore(updatedScore);
     }
-
     setHasAttempted(true);
 
     if (!isLastQuestion) {
@@ -117,7 +112,6 @@ const styles = StyleSheet.create({
     input: { borderWidth: 1, borderColor: "#ccc", borderRadius: 10, padding: 12, fontSize: 16, marginBottom: 10 },
     submitButton: { backgroundColor: "#008000", padding: 15, borderRadius: 10 },
     buttonText: { color: 'white', fontSize: 18, textAlign: "center" },
-
     buttonRow: {
       flexDirection: "row",
       justifyContent: "center",
@@ -155,8 +149,6 @@ const styles = StyleSheet.create({
       height: 10,
       borderRadius: 5,
       backgroundColor: "#fff",
-  
-  
     },
     progressFill: {
       height: "100%",
